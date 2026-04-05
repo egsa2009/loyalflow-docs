@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LoyalFlow — Manual de Usuario</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --blue:    #1A56DB;
+  --green:   #0E9F6E;
+  --amber:   #F59E0B;
+  --red:     #EF4444;
+  --dark:    #0F172A;
+  --mid:     #475569;
+  --light:   #F1F5F9;
+  --border:  #E2E8F0;
+  --white:   #FFFFFF;
+  --sidebar: 280px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#F8FAFC;color:var(--dark);display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{
+  width:var(--sidebar);flex-shrink:0;background:var(--white);
+  border-right:1px solid var(--border);height:100vh;position:fixed;
+  top:0;left:0;overflow-y:auto;display:flex;flex-direction:column;
+  z-index:100;
+}
+.sidebar-logo{
+  padding:24px 20px 16px;border-bottom:1px solid var(--border);
+}
+.sidebar-logo h1{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--blue)}
+.sidebar-logo p{font-size:12px;color:var(--mid);margin-top:2px}
+
+#search-box{
+  margin:12px 16px;padding:8px 12px 8px 36px;
+  border:1px solid var(--border);border-radius:10px;
+  font-size:13px;font-family:'DM Sans',sans-serif;
+  background:var(--light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 10px center;
+  width:calc(100% - 32px);outline:none;transition:.2s;
+}
+#search-box:focus{border-color:var(--blue);background-color:var(--white)}
+
+.nav-section{padding:8px 0}
+.nav-section-title{
+  font-size:10px;font-weight:700;letter-spacing:.08em;
+  color:var(--mid);text-transform:uppercase;padding:6px 20px 4px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:8px;padding:7px 20px;
+  font-size:13px;color:var(--mid);cursor:pointer;
+  border-left:3px solid transparent;transition:.15s;text-decoration:none;
+}
+.nav-item:hover{color:var(--dark);background:var(--light)}
+.nav-item.active{color:var(--blue);border-left-color:var(--blue);background:#EFF6FF;font-weight:500}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+
+/* ── MAIN ── */
+#main{margin-left:var(--sidebar);flex:1;min-height:100vh}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,#0F172A 0%,#1E3A8A 50%,#1A56DB 100%);
+  padding:60px 48px 48px;color:white;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:300px;height:300px;border-radius:50%;
+  background:rgba(255,255,255,.04);
+}
+.hero::after{
+  content:'';position:absolute;bottom:-60px;left:30%;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(255,255,255,.03);
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  padding:4px 12px;border-radius:100px;font-size:12px;margin-bottom:16px;
+}
+.hero h2{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;line-height:1.2;margin-bottom:12px}
+.hero p{font-size:16px;opacity:.8;max-width:520px;line-height:1.6}
+.hero-apps{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+.hero-app{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  padding:8px 16px;border-radius:10px;font-size:13px;cursor:pointer;
+  transition:.2s;display:flex;align-items:center;gap:6px;
+}
+.hero-app:hover{background:rgba(255,255,255,.2)}
+
+/* ── CONTENT ── */
+.content{padding:40px 48px;max-width:860px}
+
+/* ── SECTION ── */
+.section{margin-bottom:48px;scroll-margin-top:20px}
+.section-header{
+  display:flex;align-items:center;gap:12px;margin-bottom:24px;
+  padding-bottom:12px;border-bottom:2px solid var(--border);
+}
+.section-emoji{font-size:28px}
+.section-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:700}
+.section-subtitle{font-size:14px;color:var(--mid);margin-top:2px}
+
+/* ── STEPS (LEGO) ── */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{
+  display:flex;gap:16px;position:relative;
+}
+.step:not(:last-child)::before{
+  content:'';position:absolute;left:19px;top:40px;
+  width:2px;height:calc(100% - 8px);background:var(--border);
+}
+.step-num{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:16px;
+  position:relative;z-index:1;
+}
+.step-body{padding:0 0 24px}
+.step-title{font-weight:600;font-size:15px;margin-bottom:4px;padding-top:9px}
+.step-desc{font-size:14px;color:var(--mid);line-height:1.6}
+
+/* ── CARDS ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:16px 0}
+.card{
+  background:var(--white);border:1px solid var(--border);border-radius:16px;
+  padding:20px;transition:.2s;cursor:default;
+}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);transform:translateY(-2px)}
+.card-icon{font-size:28px;margin-bottom:10px}
+.card-title{font-weight:600;font-size:14px;margin-bottom:4px}
+.card-desc{font-size:13px;color:var(--mid);line-height:1.5}
+
+/* ── FEATURE ROWS ── */
+.features{display:flex;flex-direction:column;gap:16px;margin:16px 0}
+.feature{
+  background:var(--white);border:1px solid var(--border);border-radius:14px;
+  padding:16px 20px;display:flex;gap:16px;align-items:flex-start;
+}
+.feature-icon{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+}
+.feature-title{font-weight:600;font-size:14px;margin-bottom:3px}
+.feature-desc{font-size:13px;color:var(--mid);line-height:1.5}
+
+/* ── TIP BOX ── */
+.tip{
+  border-radius:12px;padding:14px 16px;margin:16px 0;
+  display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.6;
+}
+.tip.blue{background:#EFF6FF;border:1px solid #BFDBFE;color:#1E40AF}
+.tip.green{background:#ECFDF5;border:1px solid #A7F3D0;color:#065F46}
+.tip.amber{background:#FFFBEB;border:1px solid #FDE68A;color:#92400E}
+.tip.red{background:#FEF2F2;border:1px solid #FECACA;color:#991B1B}
+.tip-icon{font-size:18px;flex-shrink:0}
+
+/* ── TABLE ── */
+.table-wrap{overflow-x:auto;margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--light);padding:10px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.04em;color:var(--mid);border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--dark)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#F8FAFC}
+
+/* ── BADGE ── */
+.badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 10px;border-radius:100px;font-size:12px;font-weight:500;
+}
+.badge.blue{background:#DBEAFE;color:#1D4ED8}
+.badge.green{background:#D1FAE5;color:#065F46}
+.badge.amber{background:#FEF3C7;color:#92400E}
+.badge.purple{background:#EDE9FE;color:#6D28D9}
+
+/* ── SCREEN MOCK ── */
+.screen-mock{
+  background:var(--dark);border-radius:20px;padding:24px;
+  margin:16px 0;color:white;font-size:13px;
+  border:4px solid #1E293B;
+}
+.screen-mock .bar{
+  display:flex;gap:6px;margin-bottom:16px;
+}
+.screen-mock .dot{width:10px;height:10px;border-radius:50%}
+
+/* ── SEARCH HIGHLIGHT ── */
+.highlight{background:#FEF08A;border-radius:3px;padding:0 2px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-100%);transition:.3s}
+  #sidebar.open{transform:translateX(0)}
+  #main{margin-left:0}
+  .content{padding:24px 20px}
+  .hero{padding:32px 20px}
+  .hero h2{font-size:26px}
+}
+
+.menu-toggle{
+  display:none;position:fixed;bottom:20px;right:20px;
+  width:48px;height:48px;border-radius:50%;background:var(--blue);
+  color:white;border:none;font-size:22px;cursor:pointer;z-index:200;
+  box-shadow:0 4px 16px rgba(26,86,219,.4);
+}
+@media(max-width:768px){.menu-toggle{display:flex;align-items:center;justify-content:center}}
+
+/* ── ANIMATION ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.section{animation:fadeUp .4s ease both}
+.section:nth-child(1){animation-delay:.05s}
+.section:nth-child(2){animation-delay:.1s}
+.section:nth-child(3){animation-delay:.15s}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <h1>📋 LoyalFlow</h1>
+    <p>Manual de Usuario v1.0</p>
+  </div>
+  <input id="search-box" type="text" placeholder="Buscar en el manual..." oninput="search(this.value)"/>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Introducción</div>
+    <a class="nav-item active" href="#intro" onclick="setActive(this)"><span class="nav-icon">🏠</span>¿Qué es LoyalFlow?</a>
+    <a class="nav-item" href="#apps" onclick="setActive(this)"><span class="nav-icon">📱</span>Las 3 aplicaciones</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">App Cliente</div>
+    <a class="nav-item" href="#cliente-registro" onclick="setActive(this)"><span class="nav-icon">✍️</span>Registro</a>
+    <a class="nav-item" href="#cliente-login" onclick="setActive(this)"><span class="nav-icon">🔐</span>Inicio de sesión</a>
+    <a class="nav-item" href="#cliente-dashboard" onclick="setActive(this)"><span class="nav-icon">🏆</span>Dashboard</a>
+    <a class="nav-item" href="#cliente-qr" onclick="setActive(this)"><span class="nav-icon">📷</span>Mi código QR</a>
+    <a class="nav-item" href="#cliente-historial" onclick="setActive(this)"><span class="nav-icon">📋</span>Historial</a>
+    <a class="nav-item" href="#cliente-beneficios" onclick="setActive(this)"><span class="nav-icon">🎁</span>Beneficios</a>
+    <a class="nav-item" href="#cliente-logros" onclick="setActive(this)"><span class="nav-icon">🏅</span>Logros</a>
+    <a class="nav-item" href="#cliente-notificaciones" onclick="setActive(this)"><span class="nav-icon">🔔</span>Notificaciones</a>
+    <a class="nav-item" href="#cliente-perfil" onclick="setActive(this)"><span class="nav-icon">👤</span>Perfil</a>
+    <a class="nav-item" href="#cliente-biometria" onclick="setActive(this)"><span class="nav-icon">🪪</span>Biometría</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">App POS</div>
+    <a class="nav-item" href="#pos-login" onclick="setActive(this)"><span class="nav-icon">🔑</span>Acceso empleado</a>
+    <a class="nav-item" href="#pos-escaneo" onclick="setActive(this)"><span class="nav-icon">📸</span>Escanear QR</a>
+    <a class="nav-item" href="#pos-compra" onclick="setActive(this)"><span class="nav-icon">🛍️</span>Registrar compra</a>
+    <a class="nav-item" href="#pos-exito" onclick="setActive(this)"><span class="nav-icon">✅</span>Confirmación</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Panel Admin</div>
+    <a class="nav-item" href="#admin-dashboard" onclick="setActive(this)"><span class="nav-icon">📊</span>Dashboard</a>
+    <a class="nav-item" href="#admin-usuarios" onclick="setActive(this)"><span class="nav-icon">👥</span>Usuarios</a>
+    <a class="nav-item" href="#admin-beneficios" onclick="setActive(this)"><span class="nav-icon">🎀</span>Beneficios</a>
+    <a class="nav-item" href="#admin-campanias" onclick="setActive(this)"><span class="nav-icon">📣</span>Campañas</a>
+    <a class="nav-item" href="#admin-reportes" onclick="setActive(this)"><span class="nav-icon">📈</span>Reportes</a>
+    <a class="nav-item" href="#admin-config" onclick="setActive(this)"><span class="nav-icon">⚙️</span>Configuración</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Referencia</div>
+    <a class="nav-item" href="#puntos" onclick="setActive(this)"><span class="nav-icon">⭐</span>Sistema de puntos</a>
+    <a class="nav-item" href="#niveles" onclick="setActive(this)"><span class="nav-icon">🎯</span>Niveles</a>
+    <a class="nav-item" href="#insignias" onclick="setActive(this)"><span class="nav-icon">🏆</span>Insignias</a>
+    <a class="nav-item" href="#faq" onclick="setActive(this)"><span class="nav-icon">❓</span>Preguntas frecuentes</a>
+  </div>
+</nav>
+
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">📋 Manual de Usuario · v1.0</div>
+    <h2>Bienvenido al manual<br/>de LoyalFlow</h2>
+    <p>Todo lo que necesitas saber para usar las 3 aplicaciones de la plataforma. Paso a paso, simple y claro.</p>
+    <div class="hero-apps">
+      <div class="hero-app" onclick="location.href='#cliente-registro'">📱 App Cliente</div>
+      <div class="hero-app" onclick="location.href='#pos-login'">🛍️ App POS</div>
+      <div class="hero-app" onclick="location.href='#admin-dashboard'">⚙️ Panel Admin</div>
+    </div>
+  </div>
+
+  <div class="content" id="search-results-container">
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- INTRO -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="intro">
+    <div class="section-header">
+      <span class="section-emoji">🏠</span>
+      <div>
+        <div class="section-title">¿Qué es LoyalFlow?</div>
+        <div class="section-subtitle">Plataforma de fidelización con gamificación</div>
+      </div>
+    </div>
+
+    <p style="font-size:15px;line-height:1.7;color:var(--mid);margin-bottom:20px">
+      LoyalFlow es un sistema que permite a los negocios <strong style="color:var(--dark)">premiar a sus clientes frecuentes</strong> con puntos, descuentos y beneficios especiales. Funciona como un programa de lealtad digital, accesible desde cualquier celular sin necesidad de instalar nada.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🛒</div>
+        <div class="card-title">El cliente compra</div>
+        <div class="card-desc">El empleado escanea el QR del cliente y registra la compra.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⭐</div>
+        <div class="card-title">Acumula puntos</div>
+        <div class="card-desc">El sistema acredita puntos automáticamente según el monto.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎁</div>
+        <div class="card-title">Canjea beneficios</div>
+        <div class="card-desc">Con sus puntos puede canjear descuentos y promociones.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏆</div>
+        <div class="card-title">Sube de nivel</div>
+        <div class="card-desc">Más compras = más nivel = más puntos por cada compra.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- LAS 3 APPS -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="apps">
+    <div class="section-header">
+      <span class="section-emoji">📱</span>
+      <div>
+        <div class="section-title">Las 3 aplicaciones</div>
+        <div class="section-subtitle">Cada app tiene un rol específico</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon" style="background:#EFF6FF">📱</div>
+        <div>
+          <div class="feature-title">App Cliente</div>
+          <div class="feature-desc">La usan los clientes del negocio. Desde aquí ven sus puntos, su código QR para presentar en caja, el historial de compras, los beneficios disponibles y sus logros desbloqueados. <span class="badge blue">app.loyalflow.com</span></div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#ECFDF5">🛍️</div>
+        <div>
+          <div class="feature-title">App POS — Punto de Venta</div>
+          <div class="feature-desc">La usan los empleados del negocio en caja. Escanean el QR del cliente y registran el monto de la compra para acreditar puntos automáticamente. <span class="badge green">pos.loyalflow.com</span></div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#F5F3FF">⚙️</div>
+        <div>
+          <div class="feature-title">Panel Administrativo</div>
+          <div class="feature-desc">Lo usa el dueño o administrador del negocio. Configura las reglas de puntos, gestiona usuarios, crea beneficios, envía campañas y ve los reportes. <span class="badge purple">admin.loyalflow.com</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- APP CLIENTE — REGISTRO -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="cliente-registro">
+    <div class="section-header">
+      <span class="section-emoji">✍️</span>
+      <div>
+        <div class="section-title">Registro — App Cliente</div>
+        <div class="section-subtitle">Cómo crear una cuenta nueva</div>
+      </div>
+    </div>
+
+    <div class="tip blue"><span class="tip-icon">💡</span>El registro es gratuito y solo toma 1 minuto. Solo necesitas un email y una contraseña.</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#DBEAFE;color:#1D4ED8">1</div>
+        <div class="step-body">
+          <div class="step-title">Abre la App Cliente</div>
+          <div class="step-desc">Visita <strong>app.loyalflow.com</strong> desde el navegador de tu celular (Chrome en Android, Safari en iPhone). En la pantalla de inicio haz click en <strong>"Regístrate"</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#DBEAFE;color:#1D4ED8">2</div>
+        <div class="step-body">
+          <div class="step-title">Completa el formulario</div>
+          <div class="step-desc">Ingresa tu <strong>nombre completo</strong>, <strong>email</strong>, <strong>contraseña</strong> (mínimo 8 caracteres) y opcionalmente tu teléfono. Si alguien te recomendó, ingresa su código de referido.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#DBEAFE;color:#1D4ED8">3</div>
+        <div class="step-body">
+          <div class="step-title">Haz click en "Crear cuenta"</div>
+          <div class="step-desc">El sistema crea tu cuenta automáticamente y te lleva al Dashboard. También genera tu código QR único — lo necesitarás para acumular puntos en caja.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip green"><span class="tip-icon">🎁</span>Si te registraste con el código de referido de un amigo, ambos reciben puntos de bienvenida automáticamente.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- APP CLIENTE — LOGIN -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="cliente-login">
+    <div class="section-header">
+      <span class="section-emoji">🔐</span>
+      <div>
+        <div class="section-title">Inicio de sesión — App Cliente</div>
+        <div class="section-subtitle">Cómo entrar a tu cuenta</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#DBEAFE;color:#1D4ED8">1</div>
+        <div class="step-body">
+          <div class="step-title">Ingresa tu email y contraseña</div>
+          <div class="step-desc">En la pantalla de login escribe el email y contraseña con los que te registraste. Haz click en <strong>"Iniciar sesión"</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#DBEAFE;color:#1D4ED8">2</div>
+        <div class="step-body">
+          <div class="step-title">Activa el acceso biométrico (opcional)</div>
+          <div class="step-desc">Una vez dentro, puedes activar la huella dactilar o Face ID desde <strong>Perfil → Activar biometría</strong>. La próxima vez entrarás con un toque.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip amber"><span class="tip-icon">⚠️</span>Si olvidaste tu contraseña, contacta al administrador del negocio para que restablezca tu acceso.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- APP CLIENTE — DASHBOARD -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="cliente-dashboard">
+    <div class="section-header">
+      <span class="section-emoji">🏆</span>
+      <div>
+        <div class="section-title">Dashboard — App Cliente</div>
+        <div class="section-subtitle">Tu pantalla principal de puntos y nivel</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon" style="background:#FEF3C7">⭐</div>
+        <div>
+          <div class="feature-title">Tus puntos disponibles</div>
+          <div class="feature-desc">El número grande en azul es tu saldo actual de puntos que puedes canjear por beneficios.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#EDE9FE">🎯</div>
+        <div>
+          <div class="feature-title">Tu nivel actual</div>
+          <div class="feature-desc">Aparece como una etiqueta (Explorador, Frecuente, Avanzado o VIP). La barra de progreso muestra cuánto te falta para el siguiente nivel.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#FEF2F2">⏰</div>
+        <div>
+          <div class="feature-title">Alerta de vencimiento</div>
+          <div class="feature-desc">Si tus puntos están próximos a vencer, aparece un aviso naranja con la fecha exacta. ¡Úsalos antes de esa fecha!</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#ECFDF5">🔔</div>
+        <div>
+          <div class="feature-title">Ícono de notificaciones</div>
+          <div class="feature-desc">El ícono de campana en la esquina superior derecha muestra cuántas notificaciones nuevas tienes del negocio.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip blue"><span class="tip-icon">💡</span>La primera vez que abres el dashboard verás un banner para activar notificaciones push. Actívalas para recibir promociones y recordatorios directamente en tu celular.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- APP CLIENTE — QR -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="cliente-qr">
+    <div class="section-header">
+      <span class="section-emoji">📷</span>
+      <div>
+        <div class="section-title">Mi código QR — App Cliente</div>
+        <div class="section-subtitle">Cómo usar tu QR en caja</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#DBEAFE;color:#1D4ED8">1</div>
+        <div class="step-body">
+          <div class="step-title">Abre "Mi QR" desde el navbar</div>
+          <div class="step-desc">Toca el ícono de QR en la barra inferior del menú. Verás tu código QR grande y tu nombre en pantalla.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#DBEAFE;color:#1D4ED8">2</div>
+        <div class="step-body">
+          <div class="step-title">Muestra la pantalla al empleado</div>
+          <div class="step-desc">Presenta tu celular al empleado en caja para que escanee el código. No necesitas imprimir nada — el QR de la pantalla funciona perfectamente.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#DBEAFE;color:#1D4ED8">3</div>
+        <div class="step-body">
+          <div class="step-title">Espera la confirmación</div>
+          <div class="step-desc">Después del pago, el empleado registra la compra y recibirás una notificación con los puntos acreditados.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip green"><span class="tip-icon">✅</span>Tu código QR es único e intransferible. Nunca lo compartas con otras personas.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- APP CLIENTE — HISTORIAL -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="cliente-historial">
+    <div class="section-header">
+      <span class="section-emoji">📋</span>
+      <div>
+        <div class="section-title">Historial — App Cliente</div>
+        <div class="section-subtitle">Todas tus transacciones de puntos</div>
+      </div>
+    </div>
+
+    <p style="font-size:14px;color:var(--mid);margin-bottom:16px;line-height:1.6">En el historial puedes ver todas las veces que acumulaste o usaste puntos. Cada registro muestra el tipo, los puntos y la fecha.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Ícono</th><th>Tipo</th><th>Significa</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>🛍️</td><td><span class="badge green">Compra</span></td><td>Puntos acreditados por una compra en el negocio</td></tr>
+          <tr><td>🎁</td><td><span class="badge purple">Redención</span></td><td>Puntos usados para canjear un beneficio</td></tr>
+          <tr><td>⭐</td><td><span class="badge amber">Bono referido</span></td><td>Puntos ganados por referir un amigo</td></tr>
+          <tr><td>⚙️</td><td><span class="badge blue">Ajuste</span></td><td>Corrección manual hecha por el administrador</td></tr>
+          <tr><td>⏰</td><td><span class="badge" style="background:#FEE2E2;color:#991B1B">Vencimiento</span></td><td>Puntos que vencieron por inactividad</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip blue"><span class="tip-icon">💡</span>Usa los filtros en la parte superior para ver solo compras, solo redenciones, o todos los movimientos.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- APP CLIENTE — BENEFICIOS -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="cliente-beneficios">
+    <div class="section-header">
+      <span class="section-emoji">🎁</span>
+      <div>
+        <div class="section-title">Beneficios — App Cliente</div>
+        <div class="section-subtitle">Canjea tus puntos por recompensas</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#EDE9FE;color:#6D28D9">1</div>
+        <div class="step-body">
+          <div class="step-title">Toca "Premios" en el menú inferior</div>
+          <div class="step-desc">Verás todos los beneficios disponibles creados por el negocio. Cada tarjeta muestra el nombre, descripción y los puntos requeridos.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#EDE9FE;color:#6D28D9">2</div>
+        <div class="step-body">
+          <div class="step-title">Verifica que tienes suficientes puntos</div>
+          <div class="step-desc">Si tienes puntos suficientes, el botón dice <strong>"Canjear beneficio"</strong> en azul. Si no, aparece en gris con cuántos puntos te faltan.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#EDE9FE;color:#6D28D9">3</div>
+        <div class="step-body">
+          <div class="step-title">Toca "Canjear beneficio"</div>
+          <div class="step-desc">Los puntos se descuentan automáticamente y aparece un mensaje verde de confirmación. Muestra esa confirmación al empleado para reclamar tu beneficio.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip amber"><span class="tip-icon">⚠️</span>Una vez canjeado un beneficio, los puntos no se pueden recuperar. Asegúrate de querer canjear antes de confirmar.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- APP CLIENTE — LOGROS -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="cliente-logros">
+    <div class="section-header">
+      <span class="section-emoji">🏅</span>
+      <div>
+        <div class="section-title">Logros — App Cliente</div>
+        <div class="section-subtitle">Tu colección de insignias</div>
+      </div>
+    </div>
+
+    <p style="font-size:14px;color:var(--mid);margin-bottom:16px;line-height:1.6">Las insignias son premios especiales que desbloqueas al cumplir ciertos hitos. Las desbloqueadas aparecen a color, las pendientes en gris con el criterio para obtenerlas.</p>
+
+    <div class="cards">
+      <div class="card"><div class="card-icon">🆕</div><div class="card-title">Nuevo Usuario</div><div class="card-desc">Completar el registro por primera vez.</div></div>
+      <div class="card"><div class="card-icon">🛍️</div><div class="card-title">Primera Compra</div><div class="card-desc">Registrar tu primera compra validada.</div></div>
+      <div class="card"><div class="card-icon">⭐</div><div class="card-title">Cliente Activo</div><div class="card-desc">Alcanzar 50 puntos acumulados.</div></div>
+      <div class="card"><div class="card-icon">🔁</div><div class="card-title">Recurrente</div><div class="card-desc">3 compras en un período de 30 días.</div></div>
+      <div class="card"><div class="card-icon">🎁</div><div class="card-title">Redentor</div><div class="card-desc">Canjear un beneficio por primera vez.</div></div>
+      <div class="card"><div class="card-icon">🏆</div><div class="card-title">Top del Mes</div><div class="card-desc">Estar en el top 10 del ranking mensual.</div></div>
+      <div class="card"><div class="card-icon">🤝</div><div class="card-title">Referidor Bronce</div><div class="card-desc">Referir 1 amigo registrado.</div></div>
+      <div class="card"><div class="card-icon">👑</div><div class="card-title">Leal VIP</div><div class="card-desc">Alcanzar el Nivel 4 (VIP).</div></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- APP CLIENTE — NOTIFICACIONES -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="cliente-notificaciones">
+    <div class="section-header">
+      <span class="section-emoji">🔔</span>
+      <div>
+        <div class="section-title">Notificaciones — App Cliente</div>
+        <div class="section-subtitle">Recibe avisos y promociones del negocio</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#ECFDF5;color:#065F46">1</div>
+        <div class="step-body">
+          <div class="step-title">Activa las notificaciones</div>
+          <div class="step-desc">La primera vez que entras al dashboard aparece un banner azul. Toca <strong>"Activar"</strong> y acepta el permiso que pide el navegador.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#ECFDF5;color:#065F46">2</div>
+        <div class="step-body">
+          <div class="step-title">Recibe notificaciones en tu celular</div>
+          <div class="step-desc">El negocio puede enviarte promociones, recordatorios de puntos por vencer y mensajes especiales directamente a tu celular, aunque tengas la app cerrada.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#ECFDF5;color:#065F46">3</div>
+        <div class="step-body">
+          <div class="step-title">Ve el historial de notificaciones</div>
+          <div class="step-desc">Toca el ícono de campana 🔔 en el dashboard para ver todas las notificaciones recibidas. Las no leídas aparecen con una línea azul a la izquierda.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- APP CLIENTE — PERFIL -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="cliente-perfil">
+    <div class="section-header">
+      <span class="section-emoji">👤</span>
+      <div>
+        <div class="section-title">Perfil — App Cliente</div>
+        <div class="section-subtitle">Gestiona tu información personal</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon" style="background:#EFF6FF">✏️</div>
+        <div>
+          <div class="feature-title">Editar información</div>
+          <div class="feature-desc">Puedes cambiar tu nombre completo y teléfono. Toca "Guardar cambios" para confirmar.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#DBEAFE">🔗</div>
+        <div>
+          <div class="feature-title">Código de referido</div>
+          <div class="feature-desc">Tu código único de 8 caracteres. Compártelo con amigos — cuando se registren con él, ambos reciben puntos de bono.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#EDE9FE">🪪</div>
+        <div>
+          <div class="feature-title">Acceso biométrico</div>
+          <div class="feature-desc">Activa o desactiva la huella dactilar / Face ID para entrar sin contraseña.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#FEF2F2">🚪</div>
+        <div>
+          <div class="feature-title">Cerrar sesión</div>
+          <div class="feature-desc">Si tienes biometría activa, cerrar sesión bloquea la pantalla. La próxima vez entras con tu huella sin escribir contraseña.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- APP CLIENTE — BIOMETRÍA -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="cliente-biometria">
+    <div class="section-header">
+      <span class="section-emoji">🪪</span>
+      <div>
+        <div class="section-title">Login biométrico — App Cliente</div>
+        <div class="section-subtitle">Entra con huella o Face ID</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#EDE9FE;color:#6D28D9">1</div>
+        <div class="step-body">
+          <div class="step-title">Inicia sesión con email y contraseña (primera vez)</div>
+          <div class="step-desc">Debes iniciar sesión normalmente al menos una vez antes de activar la biometría.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#EDE9FE;color:#6D28D9">2</div>
+        <div class="step-body">
+          <div class="step-title">Ve a Perfil → Activar biometría</div>
+          <div class="step-desc">Toca el botón morado <strong>"Activar biometría"</strong>. El dispositivo pedirá tu huella o Face ID para confirmar el registro.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#EDE9FE;color:#6D28D9">3</div>
+        <div class="step-body">
+          <div class="step-title">La próxima vez usa el botón biométrico</div>
+          <div class="step-desc">En el login aparece el botón <strong>"Entrar con biometría"</strong>. Tócalo y usa tu huella o Face ID para entrar instantáneamente.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip blue"><span class="tip-icon">💡</span>La biometría funciona en Chrome (Android) y Safari (iPhone). Debe estar habilitada en la configuración del dispositivo.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- POS — LOGIN -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="pos-login">
+    <div class="section-header">
+      <span class="section-emoji">🔑</span>
+      <div>
+        <div class="section-title">Acceso empleado — App POS</div>
+        <div class="section-subtitle">Cómo entrar al punto de venta</div>
+      </div>
+    </div>
+
+    <div class="tip amber"><span class="tip-icon">⚠️</span>Solo los empleados y administradores del negocio pueden acceder al POS. Los clientes no tienen acceso.</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#DCFCE7;color:#166534">1</div>
+        <div class="step-body">
+          <div class="step-title">Abre pos.loyalflow.com</div>
+          <div class="step-desc">Desde el celular o tablet que usas en caja, abre el navegador y ve a la URL del POS. Guárdala como favorito para acceso rápido.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#DCFCE7;color:#166534">2</div>
+        <div class="step-body">
+          <div class="step-title">Ingresa tus credenciales de empleado</div>
+          <div class="step-desc">Usa el email y contraseña que el administrador te asignó. La pantalla es verde — diferente a la app cliente para evitar confusiones.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- POS — ESCANEO -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="pos-escaneo">
+    <div class="section-header">
+      <span class="section-emoji">📸</span>
+      <div>
+        <div class="section-title">Escanear QR — App POS</div>
+        <div class="section-subtitle">Identificar al cliente antes de registrar la compra</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#DCFCE7;color:#166534">1</div>
+        <div class="step-body">
+          <div class="step-title">Toca "Escanear QR con cámara"</div>
+          <div class="step-desc">Se activa la cámara del dispositivo. Apunta al QR que el cliente muestra en su celular desde la app cliente.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#DCFCE7;color:#166534">2</div>
+        <div class="step-body">
+          <div class="step-title">El sistema identifica al cliente</div>
+          <div class="step-desc">Aparecen automáticamente: <strong>nombre del cliente</strong>, su nivel actual, saldo de puntos y fecha de última compra.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#DCFCE7;color:#166534">3</div>
+        <div class="step-body">
+          <div class="step-title">Si la cámara no funciona — ingreso manual</div>
+          <div class="step-desc">Toca <strong>"Ingresar código manual"</strong> y pide al cliente que te dicte o muestre el código hash de su QR. Pégalo en el campo y toca "Buscar".</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- POS — COMPRA -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="pos-compra">
+    <div class="section-header">
+      <span class="section-emoji">🛍️</span>
+      <div>
+        <div class="section-title">Registrar compra — App POS</div>
+        <div class="section-subtitle">Acreditar puntos al cliente</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#DCFCE7;color:#166534">1</div>
+        <div class="step-body">
+          <div class="step-title">Verifica que el cliente es el correcto</div>
+          <div class="step-desc">Confirma el nombre en pantalla con el cliente. Toca <strong>"Registrar compra →"</strong> para continuar.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#DCFCE7;color:#166534">2</div>
+        <div class="step-body">
+          <div class="step-title">Ingresa el monto de la compra</div>
+          <div class="step-desc">Escribe el valor total en pesos colombianos (COP). El sistema muestra automáticamente los puntos que se acreditarán según la escala configurada.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#DCFCE7;color:#166534">3</div>
+        <div class="step-body">
+          <div class="step-title">Ingresa el número de factura (opcional)</div>
+          <div class="step-desc">Si quieres llevar trazabilidad, ingresa el número de factura. Es opcional — puedes dejarlo vacío.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#DCFCE7;color:#166534">4</div>
+        <div class="step-body">
+          <div class="step-title">Toca "Confirmar compra"</div>
+          <div class="step-desc">El botón muestra los puntos que se acreditarán. Si el monto es menor al mínimo configurado, el botón aparece deshabilitado.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip green"><span class="tip-icon">💡</span>El preview de puntos se actualiza en tiempo real mientras escribes el monto — así sabes exactamente cuántos puntos recibirá el cliente antes de confirmar.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- POS — ÉXITO -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="pos-exito">
+    <div class="section-header">
+      <span class="section-emoji">✅</span>
+      <div>
+        <div class="section-title">Confirmación — App POS</div>
+        <div class="section-subtitle">Qué ver después de registrar una compra</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon" style="background:#ECFDF5">✅</div>
+        <div>
+          <div class="feature-title">Puntos acreditados</div>
+          <div class="feature-desc">El número grande verde muestra cuántos puntos se acreditaron. Abajo aparece el nuevo saldo total del cliente.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#EDE9FE">🎉</div>
+        <div>
+          <div class="feature-title">Subida de nivel</div>
+          <div class="feature-desc">Si el cliente subió de nivel con esta compra, aparece un mensaje especial de celebración en morado.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#FEF3C7">🏅</div>
+        <div>
+          <div class="feature-title">Nuevas insignias</div>
+          <div class="feature-desc">Si el cliente desbloqueó alguna insignia nueva, aparece listada en la pantalla de éxito.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip blue"><span class="tip-icon">💡</span>Toca "Nueva compra" para volver al escáner y atender al siguiente cliente.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- ADMIN — DASHBOARD -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="admin-dashboard">
+    <div class="section-header">
+      <span class="section-emoji">📊</span>
+      <div>
+        <div class="section-title">Dashboard — Panel Admin</div>
+        <div class="section-subtitle">Vista general de la actividad del negocio</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card"><div class="card-icon">👥</div><div class="card-title">Clientes totales</div><div class="card-desc">Total de clientes registrados en el programa.</div></div>
+      <div class="card"><div class="card-icon">📈</div><div class="card-title">Nuevos este mes</div><div class="card-desc">Clientes que se registraron en el mes actual.</div></div>
+      <div class="card"><div class="card-icon">🛍️</div><div class="card-title">Compras del mes</div><div class="card-desc">Número de transacciones registradas este mes.</div></div>
+      <div class="card"><div class="card-icon">⭐</div><div class="card-title">Puntos emitidos</div><div class="card-desc">Total de puntos acreditados este mes.</div></div>
+    </div>
+
+    <p style="font-size:14px;color:var(--mid);margin-top:8px;line-height:1.6">La gráfica de barras muestra las compras de los últimos 7 días. La sección "Top clientes" muestra los 5 clientes con más puntos históricos.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- ADMIN — USUARIOS -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="admin-usuarios">
+    <div class="section-header">
+      <span class="section-emoji">👥</span>
+      <div>
+        <div class="section-title">Usuarios — Panel Admin</div>
+        <div class="section-subtitle">Gestión de clientes del programa</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon" style="background:#EFF6FF">🔍</div>
+        <div>
+          <div class="feature-title">Buscar clientes</div>
+          <div class="feature-desc">Usa la barra de búsqueda para encontrar clientes por nombre o teléfono. Los resultados se actualizan en tiempo real.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#ECFDF5">📊</div>
+        <div>
+          <div class="feature-title">Ver detalles del cliente</div>
+          <div class="feature-desc">La tabla muestra nombre, nivel, saldo de puntos, última compra y fecha de registro de cada cliente.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#FFFBEB">📥</div>
+        <div>
+          <div class="feature-title">Exportar a CSV</div>
+          <div class="feature-desc">Toca "Exportar CSV" para descargar la lista completa de clientes en formato Excel. Útil para análisis externos.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- ADMIN — BENEFICIOS -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="admin-beneficios">
+    <div class="section-header">
+      <span class="section-emoji">🎀</span>
+      <div>
+        <div class="section-title">Beneficios — Panel Admin</div>
+        <div class="section-subtitle">Crear y gestionar recompensas canjeables</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#EDE9FE;color:#6D28D9">1</div>
+        <div class="step-body">
+          <div class="step-title">Toca "Nuevo beneficio"</div>
+          <div class="step-desc">Aparece un formulario. Ingresa el nombre del beneficio (ej: "10% de descuento"), una descripción opcional y los puntos requeridos para canjearlo.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#EDE9FE;color:#6D28D9">2</div>
+        <div class="step-body">
+          <div class="step-title">Configura el stock (opcional)</div>
+          <div class="step-desc">Si quieres limitar cuántas veces se puede canjear, ingresa el stock. Déjalo vacío para stock ilimitado.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#EDE9FE;color:#6D28D9">3</div>
+        <div class="step-body">
+          <div class="step-title">Activa o desactiva beneficios</div>
+          <div class="step-desc">Usa el toggle verde/gris para activar o pausar un beneficio. Los beneficios inactivos no aparecen para los clientes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- ADMIN — CAMPAÑAS -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="admin-campanias">
+    <div class="section-header">
+      <span class="section-emoji">📣</span>
+      <div>
+        <div class="section-title">Campañas — Panel Admin</div>
+        <div class="section-subtitle">Enviar notificaciones push a los clientes</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:#FEF3C7;color:#92400E">1</div>
+        <div class="step-body">
+          <div class="step-title">Selecciona el tipo de mensaje</div>
+          <div class="step-desc">Elige entre: <strong>Promoción</strong> (oferta especial), <strong>Recordatorio de puntos</strong> (puntos por vencer), <strong>Cumpleaños</strong> (mensaje especial) o <strong>Personalizado</strong> (escribe tu propio texto).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#FEF3C7;color:#92400E">2</div>
+        <div class="step-body">
+          <div class="step-title">Edita el título y mensaje</div>
+          <div class="step-desc">Personaliza el texto. El contador de caracteres te avisa cuando te acercas al límite. El preview muestra exactamente cómo verán los clientes la notificación.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#FEF3C7;color:#92400E">3</div>
+        <div class="step-body">
+          <div class="step-title">Selecciona la URL destino</div>
+          <div class="step-desc">Elige a qué pantalla va el cliente cuando toca la notificación: Dashboard, Beneficios, Historial o Mi QR.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:#FEF3C7;color:#92400E">4</div>
+        <div class="step-body">
+          <div class="step-title">Toca "Enviar a X clientes"</div>
+          <div class="step-desc">El botón muestra cuántos clientes tienen notificaciones activas. La notificación llega a sus celulares en segundos, incluso si tienen la app cerrada.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip red"><span class="tip-icon">⚠️</span>Solo los clientes que activaron las notificaciones push recibirán el mensaje. Anima a tus clientes a activarlas desde el Dashboard.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- ADMIN — REPORTES -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="admin-reportes">
+    <div class="section-header">
+      <span class="section-emoji">📈</span>
+      <div>
+        <div class="section-title">Reportes — Panel Admin</div>
+        <div class="section-subtitle">Análisis de actividad del programa</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon" style="background:#EFF6FF">📅</div>
+        <div>
+          <div class="feature-title">Selector de período</div>
+          <div class="feature-desc">Filtra los datos por últimos 7, 30 o 90 días. Los KPIs y gráficas se actualizan inmediatamente.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#ECFDF5">📊</div>
+        <div>
+          <div class="feature-title">Gráficas de compras y puntos</div>
+          <div class="feature-desc">Visualiza la tendencia de compras y puntos emitidos día a día. Útil para identificar los días de mayor actividad.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#FFFBEB">📣</div>
+        <div>
+          <div class="feature-title">Historial de campañas</div>
+          <div class="feature-desc">Ve todas las campañas enviadas con fecha y cuántos clientes las recibieron.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#EDE9FE">📥</div>
+        <div>
+          <div class="feature-title">Exportar a CSV</div>
+          <div class="feature-desc">Descarga los datos del período seleccionado en formato Excel para análisis externo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- ADMIN — CONFIGURACIÓN -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="admin-config">
+    <div class="section-header">
+      <span class="section-emoji">⚙️</span>
+      <div>
+        <div class="section-title">Configuración — Panel Admin</div>
+        <div class="section-subtitle">Personaliza tu negocio y las reglas de puntos</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon" style="background:#EFF6FF">🖼️</div>
+        <div>
+          <div class="feature-title">Logo del negocio</div>
+          <div class="feature-desc">Sube el logo de tu negocio (PNG, JPG o SVG, máx 2MB). Aparecerá en la App Cliente para todos tus clientes.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#ECFDF5">🏷️</div>
+        <div>
+          <div class="feature-title">Nombre del negocio</div>
+          <div class="feature-desc">El nombre que verán los clientes en la parte superior del dashboard de la App Cliente.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#FEF3C7">🎨</div>
+        <div>
+          <div class="feature-title">Color principal</div>
+          <div class="feature-desc">El color de los botones y elementos principales. Elige el color de tu marca.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap" style="margin-top:20px">
+      <table>
+        <thead>
+          <tr><th>Regla</th><th>Descripción</th><th>Valor por defecto</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Monto mínimo</td><td>Compra mínima para acumular puntos</td><td>$30.000 COP</td></tr>
+          <tr><td>Días de vencimiento</td><td>Días de inactividad antes de que vencen los puntos</td><td>180 días</td></tr>
+          <tr><td>Aviso de vencimiento</td><td>Días de anticipación para avisar al cliente</td><td>15 días</td></tr>
+          <tr><td>Bono referidor</td><td>Puntos para quien refiere un amigo</td><td>20 puntos</td></tr>
+          <tr><td>Bono referido</td><td>Puntos para el nuevo cliente referido</td><td>10 puntos</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SISTEMA DE PUNTOS -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="puntos">
+    <div class="section-header">
+      <span class="section-emoji">⭐</span>
+      <div>
+        <div class="section-title">Sistema de puntos</div>
+        <div class="section-subtitle">Cómo se calculan y acumulan los puntos</div>
+      </div>
+    </div>
+
+    <p style="font-size:14px;color:var(--mid);margin-bottom:16px;line-height:1.6">Los puntos se calculan según el monto de la compra y el nivel del cliente. A mayor nivel, más puntos por compra.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Rango de monto</th><th>Puntos base</th><th>Con nivel VIP (x2)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>$0 – $29.999</td><td>0 puntos</td><td>0 puntos</td></tr>
+          <tr><td>$30.000 – $149.999</td><td>5 puntos</td><td>10 puntos</td></tr>
+          <tr><td>$150.000 – $299.999</td><td>15 puntos</td><td>30 puntos</td></tr>
+          <tr><td>$300.000 – $499.999</td><td>35 puntos</td><td>70 puntos</td></tr>
+          <tr><td>$500.000 en adelante</td><td>80 puntos</td><td>160 puntos</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip amber"><span class="tip-icon">⚠️</span>El administrador puede cambiar estos rangos y valores desde Configuración → Escala de puntos. Los valores mostrados son los predeterminados.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- NIVELES -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="niveles">
+    <div class="section-header">
+      <span class="section-emoji">🎯</span>
+      <div>
+        <div class="section-title">Sistema de niveles</div>
+        <div class="section-subtitle">Sube de nivel acumulando puntos históricos</div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card" style="border-color:#E2E8F0">
+        <div class="card-icon">🌱</div>
+        <div class="card-title">Nivel 1 — Explorador</div>
+        <div class="card-desc">0 a 99 puntos históricos. Multiplicador x1.0</div>
+      </div>
+      <div class="card" style="border-color:#BFDBFE">
+        <div class="card-icon">⭐</div>
+        <div class="card-title">Nivel 2 — Frecuente</div>
+        <div class="card-desc">100 a 299 puntos históricos. Multiplicador x1.2</div>
+      </div>
+      <div class="card" style="border-color:#DDD6FE">
+        <div class="card-icon">🔥</div>
+        <div class="card-title">Nivel 3 — Avanzado</div>
+        <div class="card-desc">300 a 699 puntos históricos. Multiplicador x1.5</div>
+      </div>
+      <div class="card" style="border-color:#FDE68A">
+        <div class="card-icon">👑</div>
+        <div class="card-title">Nivel 4 — VIP</div>
+        <div class="card-desc">700+ puntos históricos. Multiplicador x2.0</div>
+      </div>
+    </div>
+
+    <div class="tip green"><span class="tip-icon">💡</span>Los puntos históricos nunca se pierden aunque canjees o venzan tus puntos disponibles. El nivel solo sube, nunca baja.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- INSIGNIAS -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="insignias">
+    <div class="section-header">
+      <span class="section-emoji">🏆</span>
+      <div>
+        <div class="section-title">Insignias completas</div>
+        <div class="section-subtitle">Todas las insignias y cómo desbloquearlas</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Insignia</th><th>Nombre</th><th>Cómo obtenerla</th><th>Tipo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>🆕</td><td>Nuevo Usuario</td><td>Completar el registro por primera vez</td><td><span class="badge blue">Automático</span></td></tr>
+          <tr><td>🛍️</td><td>Primera Compra</td><td>Registrar la primera compra validada</td><td><span class="badge blue">Automático</span></td></tr>
+          <tr><td>⭐</td><td>Cliente Activo</td><td>Alcanzar 50 puntos acumulados históricos</td><td><span class="badge blue">Automático</span></td></tr>
+          <tr><td>🔁</td><td>Recurrente</td><td>3 compras en un período de 30 días</td><td><span class="badge blue">Automático</span></td></tr>
+          <tr><td>🎁</td><td>Redentor</td><td>Canjear un beneficio por primera vez</td><td><span class="badge blue">Automático</span></td></tr>
+          <tr><td>🏆</td><td>Top del Mes</td><td>Estar en el top 10 del ranking mensual</td><td><span class="badge amber">Mensual</span></td></tr>
+          <tr><td>🤝</td><td>Referidor Bronce</td><td>Referir 1 usuario registrado</td><td><span class="badge blue">Automático</span></td></tr>
+          <tr><td>🥈</td><td>Referidor Plata</td><td>Referir 5 usuarios registrados</td><td><span class="badge blue">Automático</span></td></tr>
+          <tr><td>🥇</td><td>Referidor Oro</td><td>Referir 10 usuarios registrados</td><td><span class="badge blue">Automático</span></td></tr>
+          <tr><td>👑</td><td>Leal VIP</td><td>Alcanzar el Nivel 4 (VIP)</td><td><span class="badge blue">Automático</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- FAQ -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="section" id="faq">
+    <div class="section-header">
+      <span class="section-emoji">❓</span>
+      <div>
+        <div class="section-title">Preguntas frecuentes</div>
+        <div class="section-subtitle">Respuestas a las dudas más comunes</div>
+      </div>
+    </div>
+
+    <div id="faq-list"></div>
+  </div>
+
+  </div><!-- end content -->
+</main>
+
+<script>
+const faqs = [
+  { q: "¿Se pierden los puntos si no compro por un tiempo?", a: "Sí. Si no realizas ninguna compra durante 180 días (configurable por el negocio), tus puntos disponibles vencen. Recibirás un aviso 15 días antes por notificación o email." },
+  { q: "¿Puedo usar mis puntos en cualquier momento?", a: "Sí, siempre que tengas suficientes puntos y el beneficio que quieres canjear esté activo y con stock disponible." },
+  { q: "¿Qué pasa si escanean mi QR por error?", a: "Nada. El QR solo registra puntos cuando el empleado ingresa un monto y confirma la compra. El simple escaneo no hace ningún cambio." },
+  { q: "¿Puedo tener la app instalada en mi celular?", a: "Sí. Desde Chrome (Android) o Safari (iPhone), busca la opción 'Añadir a pantalla de inicio' en el menú del navegador. La app funciona como una aplicación nativa." },
+  { q: "¿Los puntos de mi nivel VIP se calculan diferente?", a: "Sí. Los clientes VIP tienen un multiplicador x2.0, lo que significa que reciben el doble de puntos por cada compra comparado con el Nivel 1." },
+  { q: "¿Puedo referir a alguien que ya está registrado?", a: "No. El código de referido solo aplica cuando alguien se registra por primera vez. Una vez registrado, no se puede aplicar el código retroactivamente." },
+  { q: "¿Qué pasa si el empleado registra un monto incorrecto?", a: "El administrador puede anular la transacción desde el Panel Admin y crear un ajuste manual con el motivo correspondiente." },
+  { q: "¿Cuántos dispositivos puedo usar con biometría?", a: "La biometría se configura por dispositivo. Puedes activarla en múltiples dispositivos, pero cada uno requiere su propia configuración." },
+  { q: "¿Cómo sé cuándo vencen mis puntos?", a: "En el dashboard aparece un aviso naranja con la fecha exacta de vencimiento. También recibirás una notificación push y/o email 15 días antes." },
+  { q: "¿El administrador puede ver mis compras?", a: "El administrador puede ver el historial de transacciones de todos los clientes del negocio para gestión y soporte. No puede ver tu contraseña ni datos bancarios." },
+]
+
+function renderFAQ(list) {
+  const container = document.getElementById('faq-list')
+  container.innerHTML = list.map((f, i) => `
+    <div style="border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden">
+      <button onclick="toggleFAQ(${i})" style="width:100%;text-align:left;padding:16px 20px;background:var(--white);border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--dark)">
+        ${f.q}
+        <span id="faq-icon-${i}" style="font-size:18px;transition:.2s">+</span>
+      </button>
+      <div id="faq-answer-${i}" style="display:none;padding:0 20px 16px;font-size:13px;color:var(--mid);line-height:1.6">${f.a}</div>
+    </div>
+  `).join('')
+}
+
+function toggleFAQ(i) {
+  const answer = document.getElementById(`faq-answer-${i}`)
+  const icon   = document.getElementById(`faq-icon-${i}`)
+  const open   = answer.style.display === 'block'
+  answer.style.display = open ? 'none' : 'block'
+  icon.textContent     = open ? '+' : '−'
+  icon.style.transform = open ? 'rotate(0deg)' : 'rotate(45deg)'
+}
+
+renderFAQ(faqs)
+
+// ── SEARCH ──
+function search(query) {
+  const q = query.toLowerCase().trim()
+  const sections = document.querySelectorAll('.section')
+
+  sections.forEach(sec => {
+    if (!q) {
+      sec.style.display = ''
+      sec.querySelectorAll('.highlight').forEach(h => {
+        h.outerHTML = h.textContent
+      })
+      return
+    }
+    const text = sec.textContent.toLowerCase()
+    sec.style.display = text.includes(q) ? '' : 'none'
+  })
+}
+
+// ── ACTIVE NAV ──
+function setActive(el) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'))
+  el.classList.add('active')
+  document.getElementById('sidebar').classList.remove('open')
+}
+
+// ── MOBILE TOGGLE ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open')
+}
+
+// ── SCROLL SPY ──
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('.section')
+  let current = ''
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 100) current = sec.id
+  })
+  if (current) {
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.classList.toggle('active', item.getAttribute('href') === `#${current}`)
+    })
+  }
+})
+</script>
+</body>
+</html>
