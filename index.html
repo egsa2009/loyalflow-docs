@@ -1,552 +1,584 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Puntto — Manual de Usuario v2.0</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puntto — Manual de Usuario v3.0</title>
 <style>
-:root{--blue:#1A56DB;--green:#0E9F6E;--amber:#F59E0B;--red:#EF4444;--dark:#0F172A;--mid:#475569;--light:#F1F5F9;--border:#E2E8F0;--white:#FFFFFF;--sidebar:280px}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:#F8FAFC;color:var(--dark);display:flex;min-height:100vh}
-#sidebar{width:var(--sidebar);flex-shrink:0;background:var(--white);border-right:1px solid var(--border);height:100vh;position:fixed;top:0;left:0;overflow-y:auto;display:flex;flex-direction:column;z-index:100}
-.sidebar-logo{padding:24px 20px 16px;border-bottom:1px solid var(--border)}
-.sidebar-logo h1{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--blue)}
-.sidebar-logo p{font-size:12px;color:var(--mid);margin-top:2px}
-.sidebar-version{font-size:10px;background:#EFF6FF;color:var(--blue);padding:2px 8px;border-radius:100px;display:inline-block;margin-top:4px;font-weight:600}
-#search-box{margin:12px 16px;padding:8px 12px 8px 36px;border:1px solid var(--border);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 10px center;width:calc(100% - 32px);outline:none;transition:.2s}
-#search-box:focus{border-color:var(--blue);background-color:var(--white)}
-.nav-section{padding:8px 0}
-.nav-section-title{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--mid);text-transform:uppercase;padding:6px 20px 4px}
-.nav-item{display:flex;align-items:center;gap:8px;padding:7px 20px;font-size:13px;color:var(--mid);cursor:pointer;border-left:3px solid transparent;transition:.15s;text-decoration:none}
-.nav-item:hover{color:var(--dark);background:var(--light)}
-.nav-item.active{color:var(--blue);border-left-color:var(--blue);background:#EFF6FF;font-weight:500}
-.nav-icon{font-size:16px;width:20px;text-align:center}
-.nav-new{font-size:9px;background:#DCFCE7;color:#166534;padding:1px 6px;border-radius:100px;font-weight:700;margin-left:auto}
-#main{margin-left:var(--sidebar);flex:1;min-height:100vh}
-.hero{background:linear-gradient(135deg,#0F172A 0%,#1E3A8A 50%,#1A56DB 100%);padding:60px 48px 48px;color:white;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.04)}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:4px 12px;border-radius:100px;font-size:12px;margin-bottom:16px}
-.hero h2{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;line-height:1.2;margin-bottom:12px}
-.hero p{font-size:16px;opacity:.8;max-width:520px;line-height:1.6}
-.hero-apps{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
-.hero-app{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:8px 16px;border-radius:10px;font-size:13px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px}
-.hero-app:hover{background:rgba(255,255,255,.2)}
-.hero-update{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 16px;margin-top:20px;font-size:12px;opacity:.9}
-.hero-update strong{color:#86EFAC}
-.content{padding:40px 48px;max-width:860px}
-.section{margin-bottom:48px;scroll-margin-top:20px;animation:fadeUp .4s ease both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.section-header{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid var(--border)}
-.section-emoji{font-size:28px}
-.section-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:700}
-.section-subtitle{font-size:14px;color:var(--mid);margin-top:2px}
-.section-new{font-size:11px;background:#DCFCE7;color:#166534;padding:2px 8px;border-radius:100px;font-weight:700;margin-left:8px;vertical-align:middle}
-.steps{display:flex;flex-direction:column;gap:0}
-.step{display:flex;gap:16px;position:relative}
-.step:not(:last-child)::before{content:'';position:absolute;left:19px;top:40px;width:2px;height:calc(100% - 8px);background:var(--border)}
-.step-num{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;position:relative;z-index:1}
-.step-body{padding:0 0 24px}
-.step-title{font-weight:600;font-size:15px;margin-bottom:4px;padding-top:9px}
-.step-desc{font-size:14px;color:var(--mid);line-height:1.6}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:16px 0}
-.card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:20px;transition:.2s}
-.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);transform:translateY(-2px)}
-.card-icon{font-size:28px;margin-bottom:10px}
-.card-title{font-weight:600;font-size:14px;margin-bottom:4px}
-.card-desc{font-size:13px;color:var(--mid);line-height:1.5}
-.features{display:flex;flex-direction:column;gap:16px;margin:16px 0}
-.feature{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start}
-.feature-icon{width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px}
-.feature-title{font-weight:600;font-size:14px;margin-bottom:3px}
-.feature-desc{font-size:13px;color:var(--mid);line-height:1.5}
-.tip{border-radius:12px;padding:14px 16px;margin:16px 0;display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.6}
-.tip.blue{background:#EFF6FF;border:1px solid #BFDBFE;color:#1E40AF}
-.tip.green{background:#ECFDF5;border:1px solid #A7F3D0;color:#065F46}
-.tip.amber{background:#FFFBEB;border:1px solid #FDE68A;color:#92400E}
-.tip.red{background:#FEF2F2;border:1px solid #FECACA;color:#991B1B}
-.tip.purple{background:#F5F3FF;border:1px solid #DDD6FE;color:#5B21B6}
-.tip-icon{font-size:18px;flex-shrink:0}
-.table-wrap{overflow-x:auto;margin:16px 0}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:var(--light);padding:10px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.04em;color:var(--mid);border-bottom:1px solid var(--border)}
-td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--dark)}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:#F8FAFC}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:12px;font-weight:500}
-.badge.blue{background:#DBEAFE;color:#1D4ED8}
-.badge.green{background:#D1FAE5;color:#065F46}
-.badge.amber{background:#FEF3C7;color:#92400E}
-.badge.purple{background:#EDE9FE;color:#6D28D9}
-.badge.red{background:#FEE2E2;color:#991B1B}
-@media(max-width:768px){#sidebar{transform:translateX(-100%);transition:.3s}#sidebar.open{transform:translateX(0)}#main{margin-left:0}.content{padding:24px 20px}.hero{padding:32px 20px}.hero h2{font-size:26px}}
-.menu-toggle{display:none;position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--blue);color:white;border:none;font-size:22px;cursor:pointer;z-index:200;box-shadow:0 4px 16px rgba(26,86,219,.4)}
-@media(max-width:768px){.menu-toggle{display:flex;align-items:center;justify-content:center}}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary: #00b8cc;
+    --primary-dark: #008fa0;
+    --dark: #0A1F44;
+    --accent: #FF6B00;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text2: #64748b;
+    --text3: #94a3b8;
+    --radius: 14px;
+    --new: #10b981;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  /* ── Layout ── */
+  .wrapper { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 280px; background: var(--dark); position: fixed; top: 0; left: 0;
+    height: 100vh; overflow-y: auto; z-index: 100; padding: 0 0 32px;
+    transform: translateX(0); transition: transform .3s;
+  }
+  .sidebar-logo {
+    padding: 24px 20px 16px; border-bottom: 1px solid rgba(255,255,255,.08);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sidebar-logo .icon {
+    width: 40px; height: 40px; background: var(--primary); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .sidebar-logo h1 { color: #fff; font-size: 18px; font-weight: 700; }
+  .sidebar-logo span { color: rgba(255,255,255,.4); font-size: 11px; display: block; }
+  .nav-section { padding: 16px 12px 4px; color: rgba(255,255,255,.3); font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 16px; margin: 2px 8px; border-radius: 10px;
+    color: rgba(255,255,255,.6); text-decoration: none; font-size: 13px;
+    transition: all .15s;
+  }
+  .nav-item:hover { background: rgba(255,255,255,.06); color: #fff; }
+  .nav-item .new-badge {
+    margin-left: auto; background: var(--new); color: #fff;
+    font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 99px;
+  }
+  .main { margin-left: 280px; padding: 48px 40px; max-width: 900px; }
+
+  /* ── Header hero ── */
+  .hero {
+    background: linear-gradient(135deg, var(--dark), #132a5c);
+    border-radius: 20px; padding: 40px; margin-bottom: 40px; color: #fff;
+  }
+  .hero h2 { font-size: 28px; font-weight: 800; }
+  .hero p { color: rgba(255,255,255,.7); margin-top: 8px; font-size: 15px; }
+  .hero-apps { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  .hero-app {
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+    border-radius: 12px; padding: 12px 20px; font-size: 13px; font-weight: 600;
+  }
+  .new-banner {
+    background: rgba(16,185,129,.15); border: 1px solid rgba(16,185,129,.3);
+    border-radius: 12px; padding: 16px 20px; margin-top: 20px;
+  }
+  .new-banner strong { color: #34d399; font-size: 12px; display: block; margin-bottom: 6px; }
+  .new-banner p { color: rgba(255,255,255,.7); font-size: 13px; }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 60px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+    padding-bottom: 16px; border-bottom: 2px solid var(--border);
+  }
+  .section-icon {
+    width: 44px; height: 44px; border-radius: 12px; background: var(--primary);
+    display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+  }
+  .section-icon.accent { background: var(--accent); }
+  .section-icon.dark { background: var(--dark); }
+  .section-icon.green { background: #10b981; }
+  .section-header h2 { font-size: 20px; font-weight: 700; }
+  .section-header .sub { font-size: 13px; color: var(--text2); margin-top: 2px; }
+  .new-tag {
+    background: #d1fae5; color: #065f46; font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 99px; letter-spacing: .5px;
+  }
+
+  /* ── Cards grid ── */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px; transition: box-shadow .2s;
+  }
+  .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+  .card .card-icon { font-size: 28px; margin-bottom: 10px; }
+  .card h4 { font-size: 14px; font-weight: 700; color: var(--text); }
+  .card p { font-size: 12px; color: var(--text2); margin-top: 4px; line-height: 1.5; }
+
+  /* ── Steps ── */
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 18px 20px; display: flex; gap: 16px; align-items: flex-start;
+  }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--primary);
+    color: #fff; font-weight: 800; font-size: 14px; display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .step-content h4 { font-size: 14px; font-weight: 700; }
+  .step-content p { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  /* ── Alert box ── */
+  .alert {
+    border-radius: 12px; padding: 14px 18px; margin: 16px 0; font-size: 13px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .alert-info { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+  .alert-warn { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+  .alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+  .alert-danger { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+
+  /* ── Table ── */
+  .doc-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+  .doc-table th { background: var(--dark); color: #fff; padding: 10px 14px; text-align: left; font-weight: 600; }
+  .doc-table th:first-child { border-radius: 10px 0 0 0; }
+  .doc-table th:last-child { border-radius: 0 10px 0 0; }
+  .doc-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .doc-table tr:hover td { background: #f8fafc; }
+
+  /* ── Feature highlight ── */
+  .feature {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px; margin-bottom: 12px; display: flex; gap: 16px;
+  }
+  .feature-icon { font-size: 28px; flex-shrink: 0; }
+  .feature h4 { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .feature p { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  /* ── Mobile toggle ── */
+  .mobile-toggle {
+    display: none; position: fixed; top: 16px; left: 16px; z-index: 200;
+    background: var(--dark); color: #fff; border: none; border-radius: 10px;
+    width: 42px; height: 42px; font-size: 20px; cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; padding: 72px 20px 40px; }
+    .mobile-toggle { display: flex; align-items: center; justify-content: center; }
+  }
 </style>
 </head>
 <body>
 
-<nav id="sidebar">
+<button class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<!-- ═══ SIDEBAR ══════════════════════════════════════════════ -->
+<aside class="sidebar">
   <div class="sidebar-logo">
-    <h1>📋 Puntto</h1>
-    <p>Manual de Usuario</p>
-    <span class="sidebar-version">v2.0 — Abril 2026</span>
+    <div class="icon">📋</div>
+    <div>
+      <h1>Puntto</h1>
+      <span>Manual de Usuario v3.0</span>
+    </div>
   </div>
-  <input id="search-box" type="text" placeholder="Buscar en el manual..." oninput="search(this.value)"/>
-  <div class="nav-section">
-    <div class="nav-section-title">Introducción</div>
-    <a class="nav-item active" href="#intro" onclick="setActive(this)"><span class="nav-icon">🏠</span>¿Qué es Puntto?</a>
-    <a class="nav-item" href="#apps" onclick="setActive(this)"><span class="nav-icon">📱</span>Las 3 aplicaciones</a>
-    <a class="nav-item" href="#novedades" onclick="setActive(this)"><span class="nav-icon">🆕</span>Novedades v2.0<span class="nav-new">NUEVO</span></a>
+
+  <div class="nav-section">Introducción</div>
+  <a href="#intro" class="nav-item">🏠 ¿Qué es Puntto?</a>
+  <a href="#apps" class="nav-item">📱 Las 4 aplicaciones</a>
+  <a href="#novedades" class="nav-item">🆕 Novedades v3.0 <span class="new-badge">NUEVO</span></a>
+
+  <div class="nav-section">App Cliente</div>
+  <a href="#cliente-registro" class="nav-item">✍️ Registro</a>
+  <a href="#cliente-login" class="nav-item">🔐 Inicio de sesión</a>
+  <a href="#cliente-dashboard" class="nav-item">🏆 Dashboard</a>
+  <a href="#cliente-bienvenida" class="nav-item">🎁 Bienvenida <span class="new-badge">NUEVO</span></a>
+  <a href="#cliente-qr" class="nav-item">📷 Mi código QR</a>
+  <a href="#cliente-historial" class="nav-item">📋 Historial</a>
+  <a href="#cliente-beneficios" class="nav-item">🎁 Beneficios</a>
+  <a href="#cliente-logros" class="nav-item">🏅 Logros</a>
+  <a href="#cliente-notificaciones" class="nav-item">🔔 Notificaciones</a>
+  <a href="#cliente-campanas" class="nav-item">📣 Reclamar campaña <span class="new-badge">NUEVO</span></a>
+  <a href="#cliente-perfil" class="nav-item">👤 Perfil</a>
+  <a href="#cliente-password" class="nav-item">🔑 Cambiar contraseña <span class="new-badge">NUEVO</span></a>
+  <a href="#cliente-biometria" class="nav-item">🪪 Biometría</a>
+  <a href="#cliente-cumpleanos" class="nav-item">🎂 Cumpleaños</a>
+
+  <div class="nav-section">App POS</div>
+  <a href="#pos-login" class="nav-item">🔑 Acceso empleado</a>
+  <a href="#pos-escaneo" class="nav-item">📸 Escanear QR</a>
+  <a href="#pos-compra" class="nav-item">🛍️ Registrar compra</a>
+  <a href="#pos-campana" class="nav-item">📣 Usar campaña <span class="new-badge">NUEVO</span></a>
+  <a href="#pos-boost" class="nav-item">⚡ Puntos especiales</a>
+  <a href="#pos-password" class="nav-item">🔑 Cambiar contraseña <span class="new-badge">NUEVO</span></a>
+
+  <div class="nav-section">Panel Admin</div>
+  <a href="#admin-dashboard" class="nav-item">📊 Dashboard</a>
+  <a href="#admin-usuarios" class="nav-item">👥 Usuarios</a>
+  <a href="#admin-beneficios" class="nav-item">🎀 Beneficios</a>
+  <a href="#admin-campanias" class="nav-item">📣 Campañas</a>
+  <a href="#admin-segmentacion" class="nav-item">🎯 Segmentación</a>
+  <a href="#admin-reportes" class="nav-item">📈 Reportes</a>
+  <a href="#admin-bienvenida" class="nav-item">🎁 Regalo bienvenida <span class="new-badge">NUEVO</span></a>
+  <a href="#admin-boost" class="nav-item">⚡ Puntos especiales</a>
+  <a href="#admin-marca" class="nav-item">🎨 Identidad de marca</a>
+  <a href="#admin-config" class="nav-item">⚙️ Configuración</a>
+  <a href="#admin-suscripcion" class="nav-item">💳 Mi suscripción <span class="new-badge">NUEVO</span></a>
+
+  <div class="nav-section">Referencia</div>
+  <a href="#puntos" class="nav-item">⭐ Sistema de puntos</a>
+  <a href="#niveles" class="nav-item">🎯 Niveles</a>
+  <a href="#insignias" class="nav-item">🏆 Insignias</a>
+  <a href="#faq" class="nav-item">❓ Preguntas frecuentes</a>
+</aside>
+
+<!-- ═══ MAIN ══════════════════════════════════════════════════ -->
+<main class="main">
+
+  <!-- Hero -->
+  <div class="hero">
+    <h2>📋 Manual de Usuario Puntto</h2>
+    <p>Todo lo que necesitas saber para usar las 4 aplicaciones. Paso a paso, simple y claro.</p>
+    <div class="hero-apps">
+      <div class="hero-app">📱 App Cliente</div>
+      <div class="hero-app">🛍️ App POS</div>
+      <div class="hero-app">⚙️ Panel Admin</div>
+      <div class="hero-app">🔒 Panel Operador</div>
+    </div>
+    <div class="new-banner">
+      <strong>🆕 NOVEDADES v3.0</strong>
+      <p>Regalo de bienvenida · Cambio de contraseña · Reclamar campañas con código · Fechas en campañas · Desactivar/eliminar usuarios · Sistema de suscripciones · Panel Operador Puntto</p>
+    </div>
   </div>
-  <div class="nav-section">
-    <div class="nav-section-title">App Cliente</div>
-    <a class="nav-item" href="#cliente-registro" onclick="setActive(this)"><span class="nav-icon">✍️</span>Registro</a>
-    <a class="nav-item" href="#cliente-login" onclick="setActive(this)"><span class="nav-icon">🔐</span>Inicio de sesión</a>
-    <a class="nav-item" href="#cliente-dashboard" onclick="setActive(this)"><span class="nav-icon">🏆</span>Dashboard</a>
-    <a class="nav-item" href="#cliente-qr" onclick="setActive(this)"><span class="nav-icon">📷</span>Mi código QR</a>
-    <a class="nav-item" href="#cliente-historial" onclick="setActive(this)"><span class="nav-icon">📋</span>Historial</a>
-    <a class="nav-item" href="#cliente-beneficios" onclick="setActive(this)"><span class="nav-icon">🎁</span>Beneficios</a>
-    <a class="nav-item" href="#cliente-logros" onclick="setActive(this)"><span class="nav-icon">🏅</span>Logros</a>
-    <a class="nav-item" href="#cliente-notificaciones" onclick="setActive(this)"><span class="nav-icon">🔔</span>Notificaciones</a>
-    <a class="nav-item" href="#cliente-perfil" onclick="setActive(this)"><span class="nav-icon">👤</span>Perfil</a>
-    <a class="nav-item" href="#cliente-biometria" onclick="setActive(this)"><span class="nav-icon">🪪</span>Biometría</a>
-    <a class="nav-item" href="#cliente-cumpleanos" onclick="setActive(this)"><span class="nav-icon">🎂</span>Cumpleaños<span class="nav-new">NUEVO</span></a>
+
+  <!-- ══ INTRO ══ -->
+  <div class="section" id="intro">
+    <div class="section-header">
+      <div class="section-icon">🏠</div>
+      <div><h2>¿Qué es Puntto?</h2><div class="sub">Plataforma de fidelización con gamificación</div></div>
+    </div>
+    <p style="margin-bottom:20px;color:var(--text2)">Puntto permite a los negocios <strong>premiar a sus clientes frecuentes</strong> con puntos, descuentos y beneficios especiales — sin instalar nada en el celular.</p>
+    <div class="cards">
+      <div class="card"><div class="card-icon">🛒</div><h4>El cliente compra</h4><p>El empleado escanea el QR y registra la compra en segundos.</p></div>
+      <div class="card"><div class="card-icon">⭐</div><h4>Acumula puntos</h4><p>El sistema acredita puntos según el monto automáticamente.</p></div>
+      <div class="card"><div class="card-icon">🎁</div><h4>Canjea beneficios</h4><p>Con sus puntos puede canjear descuentos y promociones.</p></div>
+      <div class="card"><div class="card-icon">🏆</div><h4>Sube de nivel</h4><p>Más compras = más nivel = más puntos por compra.</p></div>
+    </div>
   </div>
-  <div class="nav-section">
-    <div class="nav-section-title">App POS</div>
-    <a class="nav-item" href="#pos-login" onclick="setActive(this)"><span class="nav-icon">🔑</span>Acceso empleado</a>
-    <a class="nav-item" href="#pos-escaneo" onclick="setActive(this)"><span class="nav-icon">📸</span>Escanear QR</a>
-    <a class="nav-item" href="#pos-compra" onclick="setActive(this)"><span class="nav-icon">🛍️</span>Registrar compra</a>
-    <a class="nav-item" href="#pos-boost" onclick="setActive(this)"><span class="nav-icon">⚡</span>Puntos especiales<span class="nav-new">NUEVO</span></a>
+
+  <!-- ══ 4 APPS ══ -->
+  <div class="section" id="apps">
+    <div class="section-header">
+      <div class="section-icon">📱</div>
+      <div><h2>Las 4 aplicaciones</h2><div class="sub">Cada app tiene un rol específico</div></div>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="card-icon">📱</div><h4>App Cliente</h4><p>La usan los clientes. Puntos, QR, historial, beneficios, logros y notificaciones.</p></div>
+      <div class="card"><div class="card-icon">🛍️</div><h4>App POS</h4><p>La usan los empleados en caja. Escanean QR, registran compras y gestionan campañas.</p></div>
+      <div class="card"><div class="card-icon">⚙️</div><h4>Panel Admin</h4><p>Lo usa el dueño del negocio. Configura reglas, campañas, beneficios y reportes.</p></div>
+      <div class="card"><div class="card-icon">🔒</div><h4>Panel Operador</h4><p>Lo usa el equipo Puntto para gestionar suscripciones y negocios de la plataforma.</p></div>
+    </div>
   </div>
-  <div class="nav-section">
-    <div class="nav-section-title">Panel Admin</div>
-    <a class="nav-item" href="#admin-dashboard" onclick="setActive(this)"><span class="nav-icon">📊</span>Dashboard</a>
-    <a class="nav-item" href="#admin-usuarios" onclick="setActive(this)"><span class="nav-icon">👥</span>Usuarios</a>
-    <a class="nav-item" href="#admin-beneficios" onclick="setActive(this)"><span class="nav-icon">🎀</span>Beneficios</a>
-    <a class="nav-item" href="#admin-campanias" onclick="setActive(this)"><span class="nav-icon">📣</span>Campañas</a>
-    <a class="nav-item" href="#admin-segmentacion" onclick="setActive(this)"><span class="nav-icon">🎯</span>Segmentación<span class="nav-new">NUEVO</span></a>
-    <a class="nav-item" href="#admin-reportes" onclick="setActive(this)"><span class="nav-icon">📈</span>Reportes</a>
-    <a class="nav-item" href="#admin-boost" onclick="setActive(this)"><span class="nav-icon">⚡</span>Puntos especiales<span class="nav-new">NUEVO</span></a>
-    <a class="nav-item" href="#admin-marca" onclick="setActive(this)"><span class="nav-icon">🎨</span>Identidad de marca<span class="nav-new">NUEVO</span></a>
-    <a class="nav-item" href="#admin-config" onclick="setActive(this)"><span class="nav-icon">⚙️</span>Configuración</a>
+
+  <!-- ══ NOVEDADES ══ -->
+  <div class="section" id="novedades">
+    <div class="section-header">
+      <div class="section-icon green">🆕</div>
+      <div><h2>Novedades v3.0</h2><div class="sub">Funcionalidades nuevas en esta versión</div></div>
+    </div>
+    <div class="feature"><div class="feature-icon">🎁</div><div><h4>Regalo de bienvenida <span class="new-tag">NUEVO</span></h4><p>Configura puntos automáticos para nuevos usuarios al registrarse. Activable desde Configuración del admin.</p></div></div>
+    <div class="feature"><div class="feature-icon">📣</div><div><h4>Reclamar campañas con código <span class="new-tag">NUEVO</span></h4><p>El cliente genera un código de 6 dígitos desde la notificación. El empleado lo ingresa en el POS para confirmar la redención.</p></div></div>
+    <div class="feature"><div class="feature-icon">📅</div><div><h4>Fechas en campañas <span class="new-tag">NUEVO</span></h4><p>Las campañas ahora tienen fecha de inicio programada y fecha de vencimiento. El sistema bloquea automáticamente las vencidas.</p></div></div>
+    <div class="feature"><div class="feature-icon">🔑</div><div><h4>Cambio de contraseña <span class="new-tag">NUEVO</span></h4><p>Clientes pueden cambiar su contraseña desde Perfil. Empleados y admins desde su pantalla correspondiente.</p></div></div>
+    <div class="feature"><div class="feature-icon">👥</div><div><h4>Gestión avanzada de usuarios <span class="new-tag">NUEVO</span></h4><p>El admin puede desactivar usuarios (conservando historial) o eliminarlos si no tienen compras registradas.</p></div></div>
+    <div class="feature"><div class="feature-icon">💳</div><div><h4>Sistema de suscripciones <span class="new-tag">NUEVO</span></h4><p>Planes Trial, Básico y Pro con fechas de inicio y fin. El POS y Admin se bloquean al vencer. El panel Operador gestiona todo.</p></div></div>
+    <div class="feature"><div class="feature-icon">📊</div><div><h4>Reportes ampliados <span class="new-tag">NUEVO</span></h4><p>Nuevo reporte de puntos de bienvenida otorgados. Campañas usadas ahora muestran el mensaje completo enviado al cliente.</p></div></div>
   </div>
-  <div class="nav-section">
-    <div class="nav-section-title">Referencia</div>
-    <a class="nav-item" href="#puntos" onclick="setActive(this)"><span class="nav-icon">⭐</span>Sistema de puntos</a>
-    <a class="nav-item" href="#niveles" onclick="setActive(this)"><span class="nav-icon">🎯</span>Niveles</a>
-    <a class="nav-item" href="#insignias" onclick="setActive(this)"><span class="nav-icon">🏆</span>Insignias</a>
-    <a class="nav-item" href="#faq" onclick="setActive(this)"><span class="nav-icon">❓</span>Preguntas frecuentes</a>
+
+  <!-- ══ CLIENTE: REGISTRO ══ -->
+  <div class="section" id="cliente-registro">
+    <div class="section-header">
+      <div class="section-icon">✍️</div>
+      <div><h2>Registro — App Cliente</h2><div class="sub">Cómo crear una cuenta nueva</div></div>
+    </div>
+    <div class="alert alert-info">💡 El registro es gratuito y toma menos de 1 minuto.</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Abre la App Cliente</h4><p>Ve a la URL del negocio y toca <strong>"Regístrate"</strong>.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Completa el formulario</h4><p>Ingresa nombre, email, contraseña, teléfono y opcionalmente tu <strong>fecha de nacimiento</strong> para recibir un regalo en tu cumpleaños.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Toca "Crear cuenta"</h4><p>Tu cuenta y QR único se crean automáticamente y entras al dashboard.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Recibe tu regalo de bienvenida</h4><p>Si el negocio tiene activo el regalo de bienvenida, recibirás puntos automáticamente y verás un banner especial en tu dashboard.</p></div></div>
+    </div>
+    <div class="alert alert-success">🎁 Si te registras con el código de referido de un amigo, ambos reciben puntos de bienvenida automáticamente.</div>
   </div>
-</nav>
 
-<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-
-<main id="main">
-<div class="hero">
-  <div class="hero-badge">📋 Manual de Usuario · v2.0</div>
-  <h2>Bienvenido al manual<br/>de Puntto</h2>
-  <p>Todo lo que necesitas saber para usar las 3 aplicaciones. Paso a paso, simple y claro.</p>
-  <div class="hero-apps">
-    <div class="hero-app" onclick="location.href='#cliente-registro'">📱 App Cliente</div>
-    <div class="hero-app" onclick="location.href='#pos-login'">🛍️ App POS</div>
-    <div class="hero-app" onclick="location.href='#admin-dashboard'">⚙️ Panel Admin</div>
+  <!-- ══ CLIENTE: BIENVENIDA ══ -->
+  <div class="section" id="cliente-bienvenida">
+    <div class="section-header">
+      <div class="section-icon green">🎁</div>
+      <div><h2>Banner de bienvenida <span class="new-tag">NUEVO</span></h2><div class="sub">Regalo automático al registrarse</div></div>
+    </div>
+    <p style="color:var(--text2);margin-bottom:16px">Al registrarte por primera vez, si el negocio tiene configurado un regalo de bienvenida, verás un banner especial en tu dashboard.</p>
+    <div class="cards">
+      <div class="card"><div class="card-icon">✨</div><h4>Aparece automáticamente</h4><p>El banner aparece en los primeros 5 minutos después de registrarte, sin hacer nada extra.</p></div>
+      <div class="card"><div class="card-icon">⭐</div><h4>Puntos acreditados</h4><p>Los puntos del regalo ya están en tu saldo desde el momento en que creas tu cuenta.</p></div>
+      <div class="card"><div class="card-icon">✕</div><h4>Se puede cerrar</h4><p>Toca la X para cerrar el banner. No volverá a aparecer en esa sesión.</p></div>
+    </div>
   </div>
-  <div class="hero-update">
-    <strong>🆕 Novedades v2.0:</strong> Cumpleaños automáticos · Segmentación de campañas · Puntos especiales x2/x3/x5 · Identidad de marca con colores dinámicos · Fecha de nacimiento en perfil
+
+  <!-- ══ CLIENTE: DASHBOARD ══ -->
+  <div class="section" id="cliente-dashboard">
+    <div class="section-header">
+      <div class="section-icon">🏆</div>
+      <div><h2>Dashboard — App Cliente</h2><div class="sub">Tu pantalla principal</div></div>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="card-icon">⭐</div><h4>Puntos disponibles</h4><p>El número grande muestra tu saldo actual de puntos canjeables.</p></div>
+      <div class="card"><div class="card-icon">🎯</div><h4>Nivel y progreso</h4><p>Muestra tu nivel y cuántos puntos te faltan para el siguiente.</p></div>
+      <div class="card"><div class="card-icon">⚡</div><h4>Banner puntos especiales</h4><p>Cuando el negocio activa un multiplicador, aparece un banner con el nombre y fecha límite.</p></div>
+      <div class="card"><div class="card-icon">🔔</div><h4>Notificaciones</h4><p>El ícono de campana muestra cuántas notificaciones nuevas tienes.</p></div>
+    </div>
   </div>
-</div>
 
-<div class="content">
-
-<div class="section" id="novedades">
-  <div class="section-header"><span class="section-emoji">🆕</span><div><div class="section-title">Novedades v2.0 <span class="section-new">NUEVO</span></div><div class="section-subtitle">Funcionalidades agregadas en esta versión</div></div></div>
-  <div class="cards">
-    <div class="card"><div class="card-icon">🎂</div><div class="card-title">Cumpleaños automáticos</div><div class="card-desc">Notificación especial el día del cumpleaños de cada cliente a las 9AM automáticamente.</div></div>
-    <div class="card"><div class="card-icon">🎯</div><div class="card-title">Segmentación de campañas</div><div class="card-desc">Envía notificaciones solo a grupos específicos: por nivel, inactivos, nuevos o puntos por vencer.</div></div>
-    <div class="card"><div class="card-icon">⚡</div><div class="card-title">Puntos especiales</div><div class="card-desc">Activa multiplicadores temporales x2, x3 o x5 para días especiales o promociones.</div></div>
-    <div class="card"><div class="card-icon">🎨</div><div class="card-title">Identidad de marca</div><div class="card-desc">Logo y color del negocio se aplican dinámicamente en toda la App Cliente.</div></div>
+  <!-- ══ CLIENTE: NOTIFICACIONES / CAMPAÑAS ══ -->
+  <div class="section" id="cliente-notificaciones">
+    <div class="section-header">
+      <div class="section-icon">🔔</div>
+      <div><h2>Notificaciones — App Cliente</h2><div class="sub">Recibe avisos y promociones del negocio</div></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Activa las notificaciones</h4><p>En el dashboard aparece un banner. Toca <strong>"Activar"</strong> y acepta el permiso del navegador.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Recibe notificaciones</h4><p>Promociones, recordatorios de puntos y mensajes de cumpleaños — incluso con la app cerrada.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Ve el historial</h4><p>Toca el ícono 🔔 en el dashboard. Las no leídas tienen una línea de color a la izquierda.</p></div></div>
+    </div>
   </div>
-</div>
 
-<div class="section" id="intro">
-  <div class="section-header"><span class="section-emoji">🏠</span><div><div class="section-title">¿Qué es Puntto?</div><div class="section-subtitle">Plataforma de fidelización con gamificación</div></div></div>
-  <p style="font-size:15px;line-height:1.7;color:var(--mid);margin-bottom:20px">Puntto permite a los negocios <strong style="color:var(--dark)">premiar a sus clientes frecuentes</strong> con puntos, descuentos y beneficios especiales — sin instalar nada en el celular.</p>
-  <div class="cards">
-    <div class="card"><div class="card-icon">🛒</div><div class="card-title">El cliente compra</div><div class="card-desc">El empleado escanea el QR y registra la compra.</div></div>
-    <div class="card"><div class="card-icon">⭐</div><div class="card-title">Acumula puntos</div><div class="card-desc">El sistema acredita puntos según el monto automáticamente.</div></div>
-    <div class="card"><div class="card-icon">🎁</div><div class="card-title">Canjea beneficios</div><div class="card-desc">Con sus puntos puede canjear descuentos y promociones.</div></div>
-    <div class="card"><div class="card-icon">🏆</div><div class="card-title">Sube de nivel</div><div class="card-desc">Más compras = más nivel = más puntos por compra.</div></div>
+  <div class="section" id="cliente-campanas">
+    <div class="section-header">
+      <div class="section-icon green">📣</div>
+      <div><h2>Reclamar campaña con código <span class="new-tag">NUEVO</span></h2><div class="sub">Cómo canjear una promoción en tienda</div></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Abre la notificación</h4><p>Toca cualquier notificación de promoción. Se abre el detalle completo con el mensaje del negocio.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Genera tu código</h4><p>Toca <strong>"Generar código para reclamar"</strong>. Aparece un código de 6 dígitos que expira en 30 minutos.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Muéstralo en caja</h4><p>El empleado ingresa el código en el POS, selecciona la campaña y confirma. La promoción queda registrada.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Promoción redimida</h4><p>La próxima vez que abras esa notificación verás el mensaje <strong>"Promoción redimida"</strong> en verde.</p></div></div>
+    </div>
+    <div class="alert alert-warn">⏰ El código expira en 30 minutos. Si vence, puedes generar uno nuevo desde la misma notificación.</div>
   </div>
-</div>
 
-<div class="section" id="apps">
-  <div class="section-header"><span class="section-emoji">📱</span><div><div class="section-title">Las 3 aplicaciones</div><div class="section-subtitle">Cada app tiene un rol específico</div></div></div>
-  <div class="features">
-    <div class="feature"><div class="feature-icon" style="background:#EFF6FF">📱</div><div><div class="feature-title">App Cliente</div><div class="feature-desc">La usan los clientes. Puntos, QR, historial, beneficios, logros y notificaciones. <span class="badge blue">app.puntto.app</span></div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#ECFDF5">🛍️</div><div><div class="feature-title">App POS — Punto de Venta</div><div class="feature-desc">La usan los empleados en caja. Escanean QR y registran compras. <span class="badge green">pos.puntto.app</span></div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#F5F3FF">⚙️</div><div><div class="feature-title">Panel Administrativo</div><div class="feature-desc">Lo usa el dueño. Configura reglas, campañas, beneficios y reportes. <span class="badge purple">admin.puntto.app</span></div></div></div>
+  <!-- ══ CLIENTE: PERFIL ══ -->
+  <div class="section" id="cliente-perfil">
+    <div class="section-header">
+      <div class="section-icon">👤</div>
+      <div><h2>Perfil — App Cliente</h2><div class="sub">Gestiona tu información personal</div></div>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="card-icon">✏️</div><h4>Editar información</h4><p>Cambia tu nombre, teléfono y fecha de nacimiento.</p></div>
+      <div class="card"><div class="card-icon">🔗</div><h4>Código de referido</h4><p>Comparte tu código único — ambos reciben puntos cuando un amigo se registra.</p></div>
+      <div class="card"><div class="card-icon">🔑</div><h4>Cambiar contraseña</h4><p>Actualiza tu contraseña desde la sección de perfil en cualquier momento.</p></div>
+      <div class="card"><div class="card-icon">🪪</div><h4>Acceso biométrico</h4><p>Activa o desactiva la huella / Face ID.</p></div>
+    </div>
   </div>
-</div>
 
-<div class="section" id="cliente-registro">
-  <div class="section-header"><span class="section-emoji">✍️</span><div><div class="section-title">Registro — App Cliente</div><div class="section-subtitle">Cómo crear una cuenta nueva</div></div></div>
-  <div class="tip blue"><span class="tip-icon">💡</span>El registro es gratuito y toma menos de 1 minuto.</div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">1</div><div class="step-body"><div class="step-title">Abre la App Cliente</div><div class="step-desc">Ve a <strong>app.puntto.app</strong> y toca <strong>"Regístrate"</strong>.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">2</div><div class="step-body"><div class="step-title">Completa el formulario</div><div class="step-desc">Ingresa nombre, email, contraseña, teléfono y opcionalmente tu <strong>fecha de nacimiento</strong> para recibir un regalo en tu cumpleaños.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">3</div><div class="step-body"><div class="step-title">Toca "Crear cuenta"</div><div class="step-desc">Tu cuenta y QR único se crean automáticamente y entras al dashboard.</div></div></div>
+  <div class="section" id="cliente-password">
+    <div class="section-header">
+      <div class="section-icon green">🔑</div>
+      <div><h2>Cambiar contraseña <span class="new-tag">NUEVO</span></h2><div class="sub">Desde el perfil del cliente</div></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Ve a Perfil</h4><p>Toca el ícono de perfil en el menú inferior.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Sección "Cambiar contraseña"</h4><p>Ingresa la nueva contraseña (mínimo 6 caracteres) y confírmala.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Toca "Actualizar contraseña"</h4><p>Verás una confirmación verde si el cambio fue exitoso.</p></div></div>
+    </div>
   </div>
-  <div class="tip green"><span class="tip-icon">🎁</span>Si te registras con el código de referido de un amigo, ambos reciben puntos de bienvenida automáticamente.</div>
-</div>
 
-<div class="section" id="cliente-login">
-  <div class="section-header"><span class="section-emoji">🔐</span><div><div class="section-title">Inicio de sesión — App Cliente</div><div class="section-subtitle">Cómo entrar a tu cuenta</div></div></div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">1</div><div class="step-body"><div class="step-title">Ingresa tu email y contraseña</div><div class="step-desc">Escribe tus credenciales y toca <strong>"Iniciar sesión"</strong>.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">2</div><div class="step-body"><div class="step-title">Activa el acceso biométrico (opcional)</div><div class="step-desc">Ve a <strong>Perfil → Activar biometría</strong> para entrar con huella o Face ID la próxima vez.</div></div></div>
+  <!-- ══ POS ══ -->
+  <div class="section" id="pos-login">
+    <div class="section-header">
+      <div class="section-icon accent">🔑</div>
+      <div><h2>Acceso empleado — App POS</h2><div class="sub">Cómo entrar al punto de venta</div></div>
+    </div>
+    <div class="alert alert-warn">⚠️ Solo los empleados y administradores del negocio pueden acceder al POS.</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Abre la App POS</h4><p>Desde el celular o tablet en caja. Guárdala como favorito para acceso rápido.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Ingresa tus credenciales</h4><p>Usa el email y contraseña que el administrador te asignó.</p></div></div>
+    </div>
   </div>
-</div>
 
-<div class="section" id="cliente-dashboard">
-  <div class="section-header"><span class="section-emoji">🏆</span><div><div class="section-title">Dashboard — App Cliente</div><div class="section-subtitle">Tu pantalla principal</div></div></div>
-  <div class="features">
-    <div class="feature"><div class="feature-icon" style="background:#FEF3C7">⭐</div><div><div class="feature-title">Puntos disponibles</div><div class="feature-desc">El número grande muestra tu saldo actual de puntos canjeables.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#EDE9FE">🎯</div><div><div class="feature-title">Nivel y progreso</div><div class="feature-desc">Muestra tu nivel (🌱 Explorador, ⭐ Frecuente, 🔥 Avanzado, 👑 VIP) y cuántos puntos te faltan para el siguiente.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#FFFBEB">⚡</div><div><div class="feature-title">Banner de puntos especiales <span class="section-new">NUEVO</span></div><div class="feature-desc">Cuando el negocio activa un multiplicador, aparece un banner naranja con el nombre y fecha límite de la promoción.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#FEF2F2">⏰</div><div><div class="feature-title">Alerta de vencimiento</div><div class="feature-desc">Aviso cuando tus puntos están próximos a vencer.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#ECFDF5">🔔</div><div><div class="feature-title">Ícono de notificaciones</div><div class="feature-desc">El ícono de campana muestra cuántas notificaciones nuevas tienes.</div></div></div>
+  <div class="section" id="pos-campana">
+    <div class="section-header">
+      <div class="section-icon green">📣</div>
+      <div><h2>Usar campaña — App POS <span class="new-tag">NUEVO</span></h2><div class="sub">Registrar el uso de una promoción</div></div>
+    </div>
+    <p style="color:var(--text2);margin-bottom:16px">Desde la pantalla del cliente escaneado, toca <strong>"Usar Campaña"</strong>. Hay dos modos:</p>
+    <div class="cards">
+      <div class="card"><div class="card-icon">#️⃣</div><h4>Con código del cliente</h4><p>El cliente muestra su código de 6 dígitos generado desde la notificación. El empleado lo ingresa, valida y selecciona la campaña a aplicar.</p></div>
+      <div class="card"><div class="card-icon">📋</div><h4>Ver campañas</h4><p>Lista todas las campañas activas del negocio. El empleado selecciona la que aplica y confirma directamente.</p></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Escanea al cliente</h4><p>Identifica al cliente con su QR como de costumbre.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Toca "Usar Campaña"</h4><p>Selecciona el modo: con código o desde la lista.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Valida e ingresa el código</h4><p>Si usas código, ingrésalo — el sistema muestra la promoción del cliente y pide confirmar.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Confirma la campaña</h4><p>Selecciona la campaña a aplicar y confirma. Queda registrado en reportes.</p></div></div>
+    </div>
   </div>
-</div>
 
-<div class="section" id="cliente-qr">
-  <div class="section-header"><span class="section-emoji">📷</span><div><div class="section-title">Mi código QR — App Cliente</div><div class="section-subtitle">Cómo usar tu QR en caja</div></div></div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">1</div><div class="step-body"><div class="step-title">Abre "Mi QR" desde el navbar</div><div class="step-desc">Toca el ícono QR en la barra inferior. Aparece tu código grande.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">2</div><div class="step-body"><div class="step-title">Muestra la pantalla al empleado</div><div class="step-desc">El empleado escanea el código desde su tablet o celular en caja.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">3</div><div class="step-body"><div class="step-title">Espera la confirmación</div><div class="step-desc">Después del pago recibirás una notificación con los puntos acreditados.</div></div></div>
+  <div class="section" id="pos-password">
+    <div class="section-header">
+      <div class="section-icon green">🔑</div>
+      <div><h2>Cambiar contraseña — POS <span class="new-tag">NUEVO</span></h2><div class="sub">Para empleados</div></div>
+    </div>
+    <p style="color:var(--text2);margin-bottom:16px">En la pantalla de escaneo, debajo del botón de ingreso manual, aparece el enlace <strong>"Cambiar contraseña"</strong>.</p>
+    <div class="alert alert-info">💡 El empleado puede cambiar su propia contraseña sin necesitar al administrador.</div>
   </div>
-  <div class="tip green"><span class="tip-icon">✅</span>Tu QR es único e intransferible. Nunca lo compartas con otras personas.</div>
-</div>
 
-<div class="section" id="cliente-historial">
-  <div class="section-header"><span class="section-emoji">📋</span><div><div class="section-title">Historial — App Cliente</div><div class="section-subtitle">Todas tus transacciones de puntos</div></div></div>
-  <div class="table-wrap"><table><thead><tr><th>Ícono</th><th>Tipo</th><th>Significa</th></tr></thead><tbody>
-    <tr><td>🛍️</td><td><span class="badge green">Compra</span></td><td>Puntos acreditados por una compra</td></tr>
-    <tr><td>🎁</td><td><span class="badge purple">Redención</span></td><td>Puntos usados para canjear un beneficio</td></tr>
-    <tr><td>⭐</td><td><span class="badge amber">Bono referido</span></td><td>Puntos por referir un amigo</td></tr>
-    <tr><td>⚙️</td><td><span class="badge blue">Ajuste</span></td><td>Corrección manual del administrador</td></tr>
-    <tr><td>⏰</td><td><span class="badge red">Vencimiento</span></td><td>Puntos que vencieron por inactividad</td></tr>
-  </tbody></table></div>
-</div>
-
-<div class="section" id="cliente-beneficios">
-  <div class="section-header"><span class="section-emoji">🎁</span><div><div class="section-title">Beneficios — App Cliente</div><div class="section-subtitle">Canjea tus puntos por recompensas</div></div></div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">1</div><div class="step-body"><div class="step-title">Toca "Premios" en el menú inferior</div><div class="step-desc">Verás todos los beneficios disponibles con nombre, descripción y puntos requeridos.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">2</div><div class="step-body"><div class="step-title">Verifica que tienes puntos suficientes</div><div class="step-desc">Si puedes canjear, el botón dice <strong>"Canjear beneficio"</strong>. Si no, muestra cuántos puntos te faltan.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">3</div><div class="step-body"><div class="step-title">Toca "Canjear beneficio"</div><div class="step-desc">Los puntos se descuentan y aparece confirmación verde. Muéstrala al empleado para reclamarlo.</div></div></div>
+  <!-- ══ ADMIN ══ -->
+  <div class="section" id="admin-usuarios">
+    <div class="section-header">
+      <div class="section-icon dark">👥</div>
+      <div><h2>Usuarios — Panel Admin</h2><div class="sub">Gestión de clientes</div></div>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="card-icon">🔍</div><h4>Buscar clientes</h4><p>Busca por nombre o teléfono en tiempo real.</p></div>
+      <div class="card"><div class="card-icon">📊</div><h4>Ver detalles</h4><p>Nombre, nivel, saldo, última compra y fecha de registro.</p></div>
+      <div class="card"><div class="card-icon">🚫</div><h4>Desactivar usuario</h4><p>El cliente no puede iniciar sesión pero su historial se conserva. Reversible.</p></div>
+      <div class="card"><div class="card-icon">🗑️</div><h4>Eliminar usuario</h4><p>Solo disponible si el cliente no tiene compras registradas. Acción permanente.</p></div>
+      <div class="card"><div class="card-icon">📥</div><h4>Exportar CSV</h4><p>Descarga la lista completa en formato Excel para análisis externo.</p></div>
+    </div>
+    <div class="alert alert-danger">⚠️ La eliminación es permanente. Solo se permite si el cliente nunca ha registrado compras.</div>
   </div>
-  <div class="tip amber"><span class="tip-icon">⚠️</span>Una vez canjeado un beneficio, los puntos no se pueden recuperar.</div>
-</div>
 
-<div class="section" id="cliente-logros">
-  <div class="section-header"><span class="section-emoji">🏅</span><div><div class="section-title">Logros — App Cliente</div><div class="section-subtitle">Tu colección de insignias</div></div></div>
-  <div class="cards">
-    <div class="card"><div class="card-icon">🆕</div><div class="card-title">Nuevo Usuario</div><div class="card-desc">Completar el registro.</div></div>
-    <div class="card"><div class="card-icon">🛍️</div><div class="card-title">Primera Compra</div><div class="card-desc">Primera compra validada.</div></div>
-    <div class="card"><div class="card-icon">⭐</div><div class="card-title">Cliente Activo</div><div class="card-desc">50 puntos históricos.</div></div>
-    <div class="card"><div class="card-icon">🔁</div><div class="card-title">Recurrente</div><div class="card-desc">3 compras en 30 días.</div></div>
-    <div class="card"><div class="card-icon">🎁</div><div class="card-title">Redentor</div><div class="card-desc">Primer canje de beneficio.</div></div>
-    <div class="card"><div class="card-icon">🏆</div><div class="card-title">Top del Mes</div><div class="card-desc">Top 10 ranking mensual.</div></div>
-    <div class="card"><div class="card-icon">🤝</div><div class="card-title">Referidor</div><div class="card-desc">Referir 1 amigo registrado.</div></div>
-    <div class="card"><div class="card-icon">👑</div><div class="card-title">Leal VIP</div><div class="card-desc">Alcanzar Nivel 4 (VIP).</div></div>
+  <div class="section" id="admin-campanias">
+    <div class="section-header">
+      <div class="section-icon dark">📣</div>
+      <div><h2>Campañas — Panel Admin</h2><div class="sub">Enviar notificaciones push segmentadas</div></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Selecciona el tipo de mensaje</h4><p>Elige entre: Promoción, Recordatorio, Cumpleaños o Personalizado.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Selecciona el segmento</h4><p>Elige a qué grupo de clientes enviar la campaña.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Configura fechas</h4><p><strong>Nuevo:</strong> Puedes programar el inicio y establecer una fecha de vencimiento. Sin fecha de fin = activa indefinidamente.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Configura el stock (opcional)</h4><p>Limita cuántas veces se puede redimir esta campaña en total.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Enviar</h4><p>La notificación llega en segundos, incluso con la app cerrada.</p></div></div>
+    </div>
   </div>
-</div>
 
-<div class="section" id="cliente-notificaciones">
-  <div class="section-header"><span class="section-emoji">🔔</span><div><div class="section-title">Notificaciones — App Cliente</div><div class="section-subtitle">Recibe avisos y promociones del negocio</div></div></div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#ECFDF5;color:#065F46">1</div><div class="step-body"><div class="step-title">Activa las notificaciones</div><div class="step-desc">En el dashboard aparece un banner. Toca <strong>"Activar"</strong> y acepta el permiso del navegador.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#ECFDF5;color:#065F46">2</div><div class="step-body"><div class="step-title">Recibe notificaciones en tu celular</div><div class="step-desc">Promociones, recordatorios de puntos y mensajes de cumpleaños — incluso con la app cerrada.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#ECFDF5;color:#065F46">3</div><div class="step-body"><div class="step-title">Ve el historial</div><div class="step-desc">Toca el ícono 🔔 en el dashboard. Las no leídas tienen una línea de color a la izquierda.</div></div></div>
+  <div class="section" id="admin-reportes">
+    <div class="section-header">
+      <div class="section-icon dark">📈</div>
+      <div><h2>Reportes — Panel Admin</h2><div class="sub">Análisis de actividad del programa</div></div>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="card-icon">📊</div><h4>Resumen</h4><p>Compras, montos, puntos emitidos y canjeados con gráficas diarias.</p></div>
+      <div class="card"><div class="card-icon">🎁</div><h4>Canjes</h4><p>Detalle de todos los beneficios canjeados por clientes.</p></div>
+      <div class="card"><div class="card-icon">📣</div><h4>Campañas usadas</h4><p>Registro de campañas redimidas en POS con título y mensaje completo.</p></div>
+      <div class="card"><div class="card-icon">🎉</div><h4>Bienvenida</h4><p><strong>Nuevo:</strong> Clientes que recibieron puntos de regalo al registrarse.</p></div>
+    </div>
   </div>
-</div>
 
-<div class="section" id="cliente-perfil">
-  <div class="section-header"><span class="section-emoji">👤</span><div><div class="section-title">Perfil — App Cliente</div><div class="section-subtitle">Gestiona tu información personal</div></div></div>
-  <div class="features">
-    <div class="feature"><div class="feature-icon" style="background:#EFF6FF">✏️</div><div><div class="feature-title">Editar información</div><div class="feature-desc">Cambia tu nombre, teléfono y fecha de nacimiento.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#DBEAFE">🔗</div><div><div class="feature-title">Código de referido</div><div class="feature-desc">Comparte tu código único — ambos reciben puntos cuando un amigo se registra.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#EDE9FE">🪪</div><div><div class="feature-title">Acceso biométrico</div><div class="feature-desc">Activa o desactiva la huella / Face ID.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#FEF2F2">🚪</div><div><div class="feature-title">Cerrar sesión</div><div class="feature-desc">Con biometría activa, bloquea la pantalla en lugar de cerrar sesión completa.</div></div></div>
+  <div class="section" id="admin-bienvenida">
+    <div class="section-header">
+      <div class="section-icon green">🎁</div>
+      <div><h2>Regalo de bienvenida <span class="new-tag">NUEVO</span></h2><div class="sub">Puntos automáticos para nuevos usuarios</div></div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Ve a Configuración</h4><p>La sección "Regalo de bienvenida" aparece antes de Puntos especiales.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Activa el toggle</h4><p>Cambia el interruptor a activo para habilitar el regalo.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Define los puntos</h4><p>Ingresa cuántos puntos recibirá cada nuevo cliente al registrarse.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Guarda los cambios</h4><p>A partir de ese momento, todos los nuevos registros recibirán los puntos automáticamente.</p></div></div>
+    </div>
+    <div class="alert alert-info">💡 Los puntos de bienvenida quedan registrados en Reportes → Bienvenida para seguimiento.</div>
   </div>
-</div>
 
-<div class="section" id="cliente-biometria">
-  <div class="section-header"><span class="section-emoji">🪪</span><div><div class="section-title">Login biométrico — App Cliente</div><div class="section-subtitle">Entra con huella o Face ID</div></div></div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">1</div><div class="step-body"><div class="step-title">Inicia sesión con contraseña (primera vez)</div><div class="step-desc">Debes iniciar sesión normalmente al menos una vez antes de activar la biometría.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">2</div><div class="step-body"><div class="step-title">Ve a Perfil → Activar biometría</div><div class="step-desc">El dispositivo pedirá tu huella o Face ID para confirmar el registro.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">3</div><div class="step-body"><div class="step-title">Usa el botón biométrico en el login</div><div class="step-desc">Toca <strong>"Entrar con biometría"</strong> y usa tu huella o Face ID para entrar instantáneamente.</div></div></div>
+  <div class="section" id="admin-suscripcion">
+    <div class="section-header">
+      <div class="section-icon green">💳</div>
+      <div><h2>Mi suscripción <span class="new-tag">NUEVO</span></h2><div class="sub">Estado del plan del negocio</div></div>
+    </div>
+    <p style="color:var(--text2);margin-bottom:16px">El panel admin muestra el estado actual de tu suscripción: plan, fecha de inicio, fecha de vencimiento y días restantes.</p>
+    <div class="cards">
+      <div class="card"><div class="card-icon">✅</div><h4>Activo</h4><p>Acceso completo a todas las funciones del panel y el POS.</p></div>
+      <div class="card"><div class="card-icon">⚠️</div><h4>Por vencer</h4><p>Banner de alerta cuando quedan menos de 7 días. Contacta a Puntto para renovar.</p></div>
+      <div class="card"><div class="card-icon">🔒</div><h4>Suspendido</h4><p>El POS se bloquea. El admin entra en modo solo lectura — puedes ver reportes y usuarios pero no hacer cambios.</p></div>
+    </div>
+    <div class="alert alert-warn">⚠️ La app del cliente <strong>nunca se bloquea</strong> — tus clientes siempre pueden ver sus puntos e historial.</div>
   </div>
-  <div class="tip blue"><span class="tip-icon">💡</span>Al cerrar sesión con biometría activa, la pantalla se bloquea pero la sesión sigue activa — entras de nuevo con tu huella sin escribir contraseña.</div>
-</div>
 
-<div class="section" id="cliente-cumpleanos">
-  <div class="section-header"><span class="section-emoji">🎂</span><div><div class="section-title">Cumpleaños automáticos <span class="section-new">NUEVO</span></div><div class="section-subtitle">Regalo especial el día de tu cumpleaños</div></div></div>
-  <div class="tip purple"><span class="tip-icon">🎂</span>Esta funcionalidad es completamente automática. El sistema te sorprende el día de tu cumpleaños a las 9AM.</div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">1</div><div class="step-body"><div class="step-title">Registra tu fecha de nacimiento</div><div class="step-desc">Ve a <strong>Perfil → Editar información</strong> y agrega tu fecha de nacimiento. También puedes ingresarla al registrarte.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">2</div><div class="step-body"><div class="step-title">El día de tu cumpleaños a las 9AM</div><div class="step-desc">Recibirás automáticamente: <em>"🎂 ¡Feliz cumpleaños! Hoy es tu día especial, tenemos un regalo para ti 🎁"</em></div></div></div>
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">3</div><div class="step-body"><div class="step-title">Visita el negocio y reclama tu regalo</div><div class="step-desc">La notificación te lleva a la sección de Beneficios para que veas y canjees tu regalo.</div></div></div>
+  <!-- ══ SISTEMA DE PUNTOS ══ -->
+  <div class="section" id="puntos">
+    <div class="section-header">
+      <div class="section-icon">⭐</div>
+      <div><h2>Sistema de puntos</h2><div class="sub">Cómo se calculan los puntos por compra</div></div>
+    </div>
+    <table class="doc-table">
+      <thead><tr><th>Rango de monto</th><th>Puntos base</th><th>Con x2</th><th>Con x3</th></tr></thead>
+      <tbody>
+        <tr><td>$0 – $49.999</td><td>0 pts</td><td>0 pts</td><td>0 pts</td></tr>
+        <tr><td>$50.000 – $149.999</td><td>5 pts</td><td>10 pts</td><td>15 pts</td></tr>
+        <tr><td>$150.000 – $299.999</td><td>15 pts</td><td>30 pts</td><td>45 pts</td></tr>
+        <tr><td>$300.000 – $499.999</td><td>35 pts</td><td>70 pts</td><td>105 pts</td></tr>
+        <tr><td>$500.000 en adelante</td><td>80 pts</td><td>160 pts</td><td>240 pts</td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-info">💡 Los rangos y puntos son configurables desde Panel Admin → Configuración → Escala de puntos.</div>
   </div>
-  <div class="tip amber"><span class="tip-icon">⚠️</span>Debes tener las notificaciones push activadas para recibir el mensaje de cumpleaños.</div>
-</div>
 
-<div class="section" id="pos-login">
-  <div class="section-header"><span class="section-emoji">🔑</span><div><div class="section-title">Acceso empleado — App POS</div><div class="section-subtitle">Cómo entrar al punto de venta</div></div></div>
-  <div class="tip amber"><span class="tip-icon">⚠️</span>Solo los empleados y administradores del negocio pueden acceder al POS. Los clientes no tienen acceso.</div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#DCFCE7;color:#166534">1</div><div class="step-body"><div class="step-title">Abre pos.puntto.app</div><div class="step-desc">Desde el celular o tablet en caja. Guárdala como favorito para acceso rápido.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DCFCE7;color:#166534">2</div><div class="step-body"><div class="step-title">Ingresa tus credenciales de empleado</div><div class="step-desc">Usa el email y contraseña que el administrador te asignó.</div></div></div>
+  <!-- ══ NIVELES ══ -->
+  <div class="section" id="niveles">
+    <div class="section-header">
+      <div class="section-icon">🎯</div>
+      <div><h2>Sistema de niveles</h2><div class="sub">Sube de nivel acumulando puntos históricos</div></div>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="card-icon">🌱</div><h4>Nivel 1 — Explorador</h4><p>0 a 99 pts históricos. Multiplicador x1.0</p></div>
+      <div class="card"><div class="card-icon">⭐</div><h4>Nivel 2 — Frecuente</h4><p>100 a 299 pts históricos. Multiplicador x1.2</p></div>
+      <div class="card"><div class="card-icon">🔥</div><h4>Nivel 3 — Avanzado</h4><p>300 a 699 pts históricos. Multiplicador x1.5</p></div>
+      <div class="card"><div class="card-icon">👑</div><h4>Nivel 4 — VIP</h4><p>700+ pts históricos. Multiplicador x2.0</p></div>
+    </div>
+    <div class="alert alert-success">💡 Los puntos históricos nunca se pierden. El nivel solo sube, nunca baja.</div>
   </div>
-</div>
 
-<div class="section" id="pos-escaneo">
-  <div class="section-header"><span class="section-emoji">📸</span><div><div class="section-title">Escanear QR — App POS</div><div class="section-subtitle">Identificar al cliente</div></div></div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#DCFCE7;color:#166534">1</div><div class="step-body"><div class="step-title">Toca "Escanear QR con cámara"</div><div class="step-desc">Se activa la cámara. Apunta al QR que el cliente muestra en su celular.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DCFCE7;color:#166534">2</div><div class="step-body"><div class="step-title">El sistema identifica al cliente</div><div class="step-desc">Aparecen: nombre, nivel, saldo de puntos y última compra.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DCFCE7;color:#166534">3</div><div class="step-body"><div class="step-title">Si la cámara no funciona — ingreso manual</div><div class="step-desc">Toca <strong>"Ingresar código manual"</strong> y pide al cliente que dicte su código.</div></div></div>
+  <!-- ══ INSIGNIAS ══ -->
+  <div class="section" id="insignias">
+    <div class="section-header">
+      <div class="section-icon">🏆</div>
+      <div><h2>Insignias</h2><div class="sub">Todas las insignias y cómo desbloquearlas</div></div>
+    </div>
+    <table class="doc-table">
+      <thead><tr><th>Insignia</th><th>Nombre</th><th>Cómo obtenerla</th></tr></thead>
+      <tbody>
+        <tr><td>🆕</td><td>Nuevo Usuario</td><td>Completar el registro</td></tr>
+        <tr><td>🛍️</td><td>Primera Compra</td><td>Primera compra validada</td></tr>
+        <tr><td>⭐</td><td>Cliente Activo</td><td>50 puntos históricos</td></tr>
+        <tr><td>🔁</td><td>Recurrente</td><td>3 compras en 30 días</td></tr>
+        <tr><td>🎁</td><td>Redentor</td><td>Primer canje de beneficio</td></tr>
+        <tr><td>🏆</td><td>Top del Mes</td><td>Top 10 ranking mensual</td></tr>
+        <tr><td>🤝</td><td>Referidor Bronce</td><td>1 amigo referido</td></tr>
+        <tr><td>🥈</td><td>Referidor Plata</td><td>5 amigos referidos</td></tr>
+        <tr><td>🥇</td><td>Referidor Oro</td><td>10 amigos referidos</td></tr>
+        <tr><td>👑</td><td>Leal VIP</td><td>Alcanzar Nivel 4 (VIP)</td></tr>
+      </tbody>
+    </table>
   </div>
-</div>
 
-<div class="section" id="pos-compra">
-  <div class="section-header"><span class="section-emoji">🛍️</span><div><div class="section-title">Registrar compra — App POS</div><div class="section-subtitle">Acreditar puntos al cliente</div></div></div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#DCFCE7;color:#166534">1</div><div class="step-body"><div class="step-title">Verifica el cliente y toca "Registrar compra"</div><div class="step-desc">Confirma que el nombre en pantalla corresponde al cliente que tienes enfrente.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DCFCE7;color:#166534">2</div><div class="step-body"><div class="step-title">Ingresa el monto de la compra</div><div class="step-desc">El preview muestra los puntos en tiempo real. Si hay puntos especiales activos, los puntos ya aparecen multiplicados.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DCFCE7;color:#166534">3</div><div class="step-body"><div class="step-title">Toca "Confirmar compra"</div><div class="step-desc">Los puntos se acreditan inmediatamente. La pantalla de éxito muestra puntos, nivel y nuevas insignias.</div></div></div>
+  <!-- ══ FAQ ══ -->
+  <div class="section" id="faq">
+    <div class="section-header">
+      <div class="section-icon">❓</div>
+      <div><h2>Preguntas frecuentes</h2><div class="sub">Respuestas a las dudas más comunes</div></div>
+    </div>
+    <div class="feature"><div class="feature-icon">❓</div><div><h4>¿El código de campaña expira?</h4><p>Sí, el código generado desde la notificación expira en 30 minutos. Si vence puedes generar uno nuevo desde la misma notificación.</p></div></div>
+    <div class="feature"><div class="feature-icon">❓</div><div><h4>¿Qué pasa si se suspende la suscripción del negocio?</h4><p>El POS se bloquea completamente. El admin entra en modo solo lectura. La app del cliente nunca se bloquea — los clientes siempre pueden ver sus puntos.</p></div></div>
+    <div class="feature"><div class="feature-icon">❓</div><div><h4>¿Puedo eliminar un cliente que ya hizo compras?</h4><p>No. Solo se pueden eliminar clientes que nunca hayan registrado compras. Para clientes con historial, solo está disponible la opción de desactivar.</p></div></div>
+    <div class="feature"><div class="feature-icon">❓</div><div><h4>¿Los puntos de bienvenida se dan a todos los nuevos registros?</h4><p>Sí, desde el momento en que activas el regalo de bienvenida en Configuración, todos los nuevos registros lo reciben automáticamente.</p></div></div>
+    <div class="feature"><div class="feature-icon">❓</div><div><h4>¿Una campaña vencida puede redimirse?</h4><p>No. El sistema bloquea automáticamente las campañas vencidas tanto en el POS como en la app del cliente.</p></div></div>
+    <div class="feature"><div class="feature-icon">❓</div><div><h4>¿Dónde veo los puntos de bienvenida que se han dado?</h4><p>En Panel Admin → Reportes → pestaña "Bienvenida". Muestra cada cliente que recibió el regalo con fecha y puntos otorgados.</p></div></div>
   </div>
-</div>
 
-<div class="section" id="pos-boost">
-  <div class="section-header"><span class="section-emoji">⚡</span><div><div class="section-title">Puntos especiales en el POS <span class="section-new">NUEVO</span></div><div class="section-subtitle">El multiplicador se aplica automáticamente</div></div></div>
-  <div class="tip green"><span class="tip-icon">⚡</span>Cuando el admin activa puntos especiales, el POS los aplica automáticamente. El empleado no necesita hacer nada diferente.</div>
-  <div class="features">
-    <div class="feature"><div class="feature-icon" style="background:#FFFBEB">🔢</div><div><div class="feature-title">Preview automático</div><div class="feature-desc">Al escribir el monto, el preview ya muestra los puntos multiplicados. Con x2 activo y 5 puntos base, el preview muestra +10.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#ECFDF5">✅</div><div><div class="feature-title">Aplicación transparente</div><div class="feature-desc">El multiplicador se aplica en la base de datos automáticamente. No hay pasos adicionales.</div></div></div>
-  </div>
-</div>
+  <footer style="margin-top:60px;padding-top:24px;border-top:1px solid var(--border);text-align:center;color:var(--text3);font-size:12px">
+    <p>📋 Manual de Usuario Puntto v3.0 — Abril 2026</p>
+    <p style="margin-top:4px">Uso educativo e informativo. Para soporte contacta al equipo Puntto.</p>
+  </footer>
 
-<div class="section" id="admin-dashboard">
-  <div class="section-header"><span class="section-emoji">📊</span><div><div class="section-title">Dashboard — Panel Admin</div><div class="section-subtitle">Vista general de la actividad</div></div></div>
-  <div class="cards">
-    <div class="card"><div class="card-icon">👥</div><div class="card-title">Clientes totales</div><div class="card-desc">Total de clientes registrados en el programa.</div></div>
-    <div class="card"><div class="card-icon">📈</div><div class="card-title">Nuevos este mes</div><div class="card-desc">Clientes que se registraron en el mes actual.</div></div>
-    <div class="card"><div class="card-icon">🛍️</div><div class="card-title">Compras del mes</div><div class="card-desc">Número de transacciones registradas este mes.</div></div>
-    <div class="card"><div class="card-icon">⭐</div><div class="card-title">Puntos emitidos</div><div class="card-desc">Total de puntos acreditados este mes.</div></div>
-  </div>
-</div>
-
-<div class="section" id="admin-usuarios">
-  <div class="section-header"><span class="section-emoji">👥</span><div><div class="section-title">Usuarios — Panel Admin</div><div class="section-subtitle">Gestión de clientes</div></div></div>
-  <div class="features">
-    <div class="feature"><div class="feature-icon" style="background:#EFF6FF">🔍</div><div><div class="feature-title">Buscar clientes</div><div class="feature-desc">Busca por nombre o teléfono en tiempo real.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#ECFDF5">📊</div><div><div class="feature-title">Ver detalles</div><div class="feature-desc">Nombre, nivel, saldo de puntos, última compra y fecha de registro.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#FFFBEB">📥</div><div><div class="feature-title">Exportar a CSV</div><div class="feature-desc">Descarga la lista completa en formato Excel para análisis externo.</div></div></div>
-  </div>
-</div>
-
-<div class="section" id="admin-beneficios">
-  <div class="section-header"><span class="section-emoji">🎀</span><div><div class="section-title">Beneficios — Panel Admin</div><div class="section-subtitle">Crear y gestionar recompensas canjeables</div></div></div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">1</div><div class="step-body"><div class="step-title">Toca "Nuevo beneficio"</div><div class="step-desc">Ingresa nombre, descripción y puntos requeridos para canjearlo.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">2</div><div class="step-body"><div class="step-title">Configura el stock (opcional)</div><div class="step-desc">Limita cuántas veces se puede canjear. Vacío = ilimitado.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#EDE9FE;color:#6D28D9">3</div><div class="step-body"><div class="step-title">Activa o desactiva con el toggle</div><div class="step-desc">Los beneficios inactivos no aparecen para los clientes.</div></div></div>
-  </div>
-</div>
-
-<div class="section" id="admin-campanias">
-  <div class="section-header"><span class="section-emoji">📣</span><div><div class="section-title">Campañas — Panel Admin</div><div class="section-subtitle">Enviar notificaciones push segmentadas</div></div></div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#FEF3C7;color:#92400E">1</div><div class="step-body"><div class="step-title">Selecciona el tipo de mensaje</div><div class="step-desc">Elige entre: Promoción, Recordatorio de puntos, Cumpleaños o Personalizado.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#FEF3C7;color:#92400E">2</div><div class="step-body"><div class="step-title">Selecciona el segmento de clientes</div><div class="step-desc">Elige a qué grupo enviar. Ver sección Segmentación para detalles.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#FEF3C7;color:#92400E">3</div><div class="step-body"><div class="step-title">Edita el mensaje y URL destino</div><div class="step-desc">El preview muestra exactamente cómo verán la notificación.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#FEF3C7;color:#92400E">4</div><div class="step-body"><div class="step-title">Toca "Enviar"</div><div class="step-desc">La notificación llega en segundos, incluso con la app cerrada.</div></div></div>
-  </div>
-</div>
-
-<div class="section" id="admin-segmentacion">
-  <div class="section-header"><span class="section-emoji">🎯</span><div><div class="section-title">Segmentación <span class="section-new">NUEVO</span></div><div class="section-subtitle">Envía mensajes solo a grupos específicos</div></div></div>
-  <div class="table-wrap"><table><thead><tr><th>Segmento</th><th>Descripción</th><th>Cuándo usarlo</th></tr></thead><tbody>
-    <tr><td>👥 Todos</td><td>Todos los suscriptores</td><td>Anuncios generales</td></tr>
-    <tr><td>🌱 Explorador</td><td>Clientes en nivel 1</td><td>Motivarlos a comprar más</td></tr>
-    <tr><td>⭐ Frecuente</td><td>Clientes en nivel 2</td><td>Acercarlos al nivel Avanzado</td></tr>
-    <tr><td>🔥 Avanzado</td><td>Clientes en nivel 3</td><td>Beneficios exclusivos</td></tr>
-    <tr><td>👑 VIP</td><td>Clientes en nivel 4</td><td>Trato especial y ofertas premium</td></tr>
-    <tr><td>😴 Inactivos +30</td><td>Sin compras en 30 días</td><td>Campaña de reactivación</td></tr>
-    <tr><td>🆕 Nuevos</td><td>Registrados en 30 días</td><td>Bienvenida y primera compra</td></tr>
-    <tr><td>⏰ Puntos por vencer</td><td>Vencen en 15 días</td><td>Recordatorio urgente</td></tr>
-  </tbody></table></div>
-  <div class="tip green"><span class="tip-icon">💡</span>Si envías a un segmento vacío, el sistema responde "No hay clientes en este segmento" sin enviar nada.</div>
-</div>
-
-<div class="section" id="admin-reportes">
-  <div class="section-header"><span class="section-emoji">📈</span><div><div class="section-title">Reportes — Panel Admin</div><div class="section-subtitle">Análisis de actividad del programa</div></div></div>
-  <div class="features">
-    <div class="feature"><div class="feature-icon" style="background:#EFF6FF">📅</div><div><div class="feature-title">Selector de período</div><div class="feature-desc">Filtra por últimos 7, 30 o 90 días.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#ECFDF5">📊</div><div><div class="feature-title">Gráficas diarias</div><div class="feature-desc">Compras y puntos emitidos día a día.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#FFFBEB">📣</div><div><div class="feature-title">Historial de campañas</div><div class="feature-desc">Campañas enviadas con fecha y destinatarios.</div></div></div>
-    <div class="feature"><div class="feature-icon" style="background:#EDE9FE">📥</div><div><div class="feature-title">Exportar a CSV</div><div class="feature-desc">Datos del período en formato Excel.</div></div></div>
-  </div>
-</div>
-
-<div class="section" id="admin-boost">
-  <div class="section-header"><span class="section-emoji">⚡</span><div><div class="section-title">Puntos especiales <span class="section-new">NUEVO</span></div><div class="section-subtitle">Activa multiplicadores temporales de puntos</div></div></div>
-  <div class="tip amber"><span class="tip-icon">⚡</span>Un "Martes de doble puntos" puede aumentar significativamente el tráfico al negocio.</div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#FEF3C7;color:#92400E">1</div><div class="step-body"><div class="step-title">Ve a Configuración → Puntos especiales</div><div class="step-desc">La sección muestra el estado actual del multiplicador con el ícono ⚡.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#FEF3C7;color:#92400E">2</div><div class="step-body"><div class="step-title">Selecciona el multiplicador</div><div class="step-desc">Elige entre Normal (x1), Doble (x2), Triple (x3) o Quíntuple (x5).</div></div></div>
-    <div class="step"><div class="step-num" style="background:#FEF3C7;color:#92400E">3</div><div class="step-body"><div class="step-title">Agrega nombre y fecha límite (opcional)</div><div class="step-desc">Ejemplo: "Domingo x2" con fecha límite esta noche. Sin fecha = activo hasta desactivar manualmente.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#FEF3C7;color:#92400E">4</div><div class="step-body"><div class="step-title">Toca "Activar puntos especiales"</div><div class="step-desc">El banner naranja aparece en la App Cliente y el POS aplica el multiplicador automáticamente.</div></div></div>
-  </div>
-</div>
-
-<div class="section" id="admin-marca">
-  <div class="section-header"><span class="section-emoji">🎨</span><div><div class="section-title">Identidad de marca <span class="section-new">NUEVO</span></div><div class="section-subtitle">Logo, nombre y color del negocio</div></div></div>
-  <div class="steps">
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">1</div><div class="step-body"><div class="step-title">Ve a Configuración → Identidad del negocio</div><div class="step-desc">Verás las opciones de logo, nombre y color principal.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">2</div><div class="step-body"><div class="step-title">Sube el logo</div><div class="step-desc">Toca "Subir logo" y selecciona la imagen (PNG, JPG o SVG, máx 2MB).</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">3</div><div class="step-body"><div class="step-title">Elige el color principal</div><div class="step-desc">Este color se aplica en botones, tarjetas y elementos de la App Cliente.</div></div></div>
-    <div class="step"><div class="step-num" style="background:#DBEAFE;color:#1D4ED8">4</div><div class="step-body"><div class="step-title">Toca "Guardar marca"</div><div class="step-desc">Los cambios se aplican inmediatamente — los clientes ven el nuevo diseño al abrir la app.</div></div></div>
-  </div>
-  <div class="tip blue"><span class="tip-icon">🎨</span>El color se aplica dinámicamente en toda la App Cliente: dashboard, navbar, tarjeta de puntos, perfil y botones.</div>
-</div>
-
-<div class="section" id="admin-config">
-  <div class="section-header"><span class="section-emoji">⚙️</span><div><div class="section-title">Configuración — Panel Admin</div><div class="section-subtitle">Reglas de negocio y escala de puntos</div></div></div>
-  <div class="table-wrap"><table><thead><tr><th>Regla</th><th>Descripción</th><th>Por defecto</th></tr></thead><tbody>
-    <tr><td>Monto mínimo</td><td>Compra mínima para acumular puntos</td><td>$30.000 COP</td></tr>
-    <tr><td>Días de vencimiento</td><td>Inactividad antes de que vencen los puntos</td><td>180 días</td></tr>
-    <tr><td>Aviso de vencimiento</td><td>Días antes del vencimiento para avisar</td><td>15 días</td></tr>
-    <tr><td>Bono referidor</td><td>Puntos para quien refiere un amigo</td><td>20 puntos</td></tr>
-    <tr><td>Bono referido</td><td>Puntos para el nuevo cliente referido</td><td>10 puntos</td></tr>
-  </tbody></table></div>
-</div>
-
-<div class="section" id="puntos">
-  <div class="section-header"><span class="section-emoji">⭐</span><div><div class="section-title">Sistema de puntos</div><div class="section-subtitle">Cómo se calculan los puntos por compra</div></div></div>
-  <div class="table-wrap"><table><thead><tr><th>Rango de monto</th><th>Puntos base</th><th>Con x2</th><th>Con x3</th></tr></thead><tbody>
-    <tr><td>$0 – $29.999</td><td>0 pts</td><td>0 pts</td><td>0 pts</td></tr>
-    <tr><td>$30.000 – $149.999</td><td>5 pts</td><td>10 pts</td><td>15 pts</td></tr>
-    <tr><td>$150.000 – $299.999</td><td>15 pts</td><td>30 pts</td><td>45 pts</td></tr>
-    <tr><td>$300.000 – $499.999</td><td>35 pts</td><td>70 pts</td><td>105 pts</td></tr>
-    <tr><td>$500.000 en adelante</td><td>80 pts</td><td>160 pts</td><td>240 pts</td></tr>
-  </tbody></table></div>
-</div>
-
-<div class="section" id="niveles">
-  <div class="section-header"><span class="section-emoji">🎯</span><div><div class="section-title">Sistema de niveles</div><div class="section-subtitle">Sube de nivel acumulando puntos históricos</div></div></div>
-  <div class="cards">
-    <div class="card" style="border-color:#E2E8F0"><div class="card-icon">🌱</div><div class="card-title">Nivel 1 — Explorador</div><div class="card-desc">0 a 99 pts históricos. Multiplicador x1.0</div></div>
-    <div class="card" style="border-color:#BFDBFE"><div class="card-icon">⭐</div><div class="card-title">Nivel 2 — Frecuente</div><div class="card-desc">100 a 299 pts históricos. Multiplicador x1.2</div></div>
-    <div class="card" style="border-color:#DDD6FE"><div class="card-icon">🔥</div><div class="card-title">Nivel 3 — Avanzado</div><div class="card-desc">300 a 699 pts históricos. Multiplicador x1.5</div></div>
-    <div class="card" style="border-color:#FDE68A"><div class="card-icon">👑</div><div class="card-title">Nivel 4 — VIP</div><div class="card-desc">700+ pts históricos. Multiplicador x2.0</div></div>
-  </div>
-  <div class="tip green"><span class="tip-icon">💡</span>Los puntos históricos nunca se pierden. El nivel solo sube, nunca baja.</div>
-</div>
-
-<div class="section" id="insignias">
-  <div class="section-header"><span class="section-emoji">🏆</span><div><div class="section-title">Insignias completas</div><div class="section-subtitle">Todas las insignias y cómo desbloquearlas</div></div></div>
-  <div class="table-wrap"><table><thead><tr><th>Insignia</th><th>Nombre</th><th>Cómo obtenerla</th></tr></thead><tbody>
-    <tr><td>🆕</td><td>Nuevo Usuario</td><td>Completar el registro</td></tr>
-    <tr><td>🛍️</td><td>Primera Compra</td><td>Primera compra validada</td></tr>
-    <tr><td>⭐</td><td>Cliente Activo</td><td>50 puntos históricos</td></tr>
-    <tr><td>🔁</td><td>Recurrente</td><td>3 compras en 30 días</td></tr>
-    <tr><td>🎁</td><td>Redentor</td><td>Primer canje de beneficio</td></tr>
-    <tr><td>🏆</td><td>Top del Mes</td><td>Top 10 ranking mensual</td></tr>
-    <tr><td>🤝</td><td>Referidor Bronce</td><td>1 amigo referido</td></tr>
-    <tr><td>🥈</td><td>Referidor Plata</td><td>5 amigos referidos</td></tr>
-    <tr><td>🥇</td><td>Referidor Oro</td><td>10 amigos referidos</td></tr>
-    <tr><td>👑</td><td>Leal VIP</td><td>Alcanzar Nivel 4 (VIP)</td></tr>
-  </tbody></table></div>
-</div>
-
-<div class="section" id="faq">
-  <div class="section-header"><span class="section-emoji">❓</span><div><div class="section-title">Preguntas frecuentes</div><div class="section-subtitle">Respuestas a las dudas más comunes</div></div></div>
-  <div id="faq-list"></div>
-</div>
-
-</div>
 </main>
 
 <script>
-const faqs = [
-  { q: "¿Se pierden los puntos si no compro por un tiempo?", a: "Sí. Si no realizas ninguna compra durante 180 días (configurable), tus puntos disponibles vencen. Recibirás un aviso 15 días antes por notificación." },
-  { q: "¿Los puntos especiales x2 o x3 se aplican automáticamente?", a: "Sí. Cuando el admin activa un multiplicador, el POS lo aplica automáticamente en cada compra. El cliente también ve el banner naranja en su dashboard. No hay nada especial que hacer." },
-  { q: "¿A qué hora llega la notificación de cumpleaños?", a: "El sistema envía la notificación automáticamente a las 9:00 AM del día de tu cumpleaños. Debes tener las notificaciones push activadas y haber registrado tu fecha de nacimiento en el perfil." },
-  { q: "¿Puedo enviar una campaña solo a clientes VIP?", a: "Sí. En la sección de Campañas, selecciona el segmento 'Clientes VIP' antes de enviar. La notificación solo llegará a los clientes en nivel 4." },
-  { q: "¿Qué pasa si activo puntos especiales sin fecha límite?", a: "El multiplicador se mantiene activo indefinidamente hasta que lo desactives manualmente desde Configuración → Puntos especiales → Desactivar." },
-  { q: "¿El color del negocio cambia en tiempo real?", a: "Sí. Al guardar un nuevo color desde Configuración → Identidad del negocio, los clientes lo ven la próxima vez que abran la app sin necesidad de actualizar nada." },
-  { q: "¿Puedo usar mis puntos en cualquier momento?", a: "Sí, siempre que tengas puntos suficientes y el beneficio esté activo y con stock disponible." },
-  { q: "¿Qué pasa si escanean mi QR por error?", a: "Nada. El QR solo registra puntos cuando el empleado ingresa un monto y confirma la compra. El simple escaneo no hace ningún cambio." },
-  { q: "¿Puedo instalar la app en mi celular?", a: "Sí. Desde Chrome (Android) o Safari (iPhone), busca 'Añadir a pantalla de inicio' en el menú del navegador. La app funciona como una aplicación nativa." },
-  { q: "¿El admin puede ver mis compras?", a: "El administrador puede ver el historial de transacciones para gestión y soporte. No puede ver tu contraseña ni datos bancarios." },
-]
-
-function renderFAQ(list) {
-  document.getElementById('faq-list').innerHTML = list.map((f, i) => `
-    <div style="border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden">
-      <button onclick="toggleFAQ(${i})" style="width:100%;text-align:left;padding:16px 20px;background:var(--white);border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--dark)">
-        ${f.q}<span id="faq-icon-${i}" style="font-size:18px;transition:.2s">+</span>
-      </button>
-      <div id="faq-answer-${i}" style="display:none;padding:0 20px 16px;font-size:13px;color:var(--mid);line-height:1.6">${f.a}</div>
-    </div>
-  `).join('')
-}
-
-function toggleFAQ(i) {
-  const a = document.getElementById(`faq-answer-${i}`)
-  const ic = document.getElementById(`faq-icon-${i}`)
-  const open = a.style.display === 'block'
-  a.style.display = open ? 'none' : 'block'
-  ic.textContent = open ? '+' : '−'
-}
-
-renderFAQ(faqs)
-
-function search(q) {
-  q = q.toLowerCase().trim()
-  document.querySelectorAll('.section').forEach(s => {
-    s.style.display = !q || s.textContent.toLowerCase().includes(q) ? '' : 'none'
-  })
-}
-
-function setActive(el) {
-  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'))
-  el.classList.add('active')
-  document.getElementById('sidebar').classList.remove('open')
-}
-
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open')
-}
-
-window.addEventListener('scroll', () => {
-  let current = ''
-  document.querySelectorAll('.section').forEach(s => {
-    if (window.scrollY >= s.offsetTop - 100) current = s.id
-  })
-  if (current) {
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.classList.toggle('active', item.getAttribute('href') === `#${current}`)
+  // Cerrar sidebar al hacer click en un link (mobile)
+  document.querySelectorAll('.nav-item').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('.sidebar').classList.remove('open')
     })
-  }
-})
+  })
 </script>
 </body>
 </html>
